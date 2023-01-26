@@ -8,8 +8,16 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ConfigProvider
         theme={{
-            // dark theme
             algorithm: theme.darkAlgorithm,
+            token: {
+                colorPrimary: '#FFF',
+                colorPrimaryActive: '#FFF',
+                colorPrimaryBorder: '#FFF',
+                colorPrimaryBorderHover: '#FFF',
+                colorBorder: '#FFF',
+
+                fontFamily: 'Poppins, sans-serif',
+            },
         }}
     >
         <App />
