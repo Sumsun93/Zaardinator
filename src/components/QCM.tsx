@@ -36,13 +36,14 @@ const QCM = () => {
         setScore(getScore(newValues));
     }
 
-    const getScore = (newValues) => {
-        const score = newValues.map((value, index) => {
+    const getScore = (newValues: any) => {
+        const score = newValues.map((value: any, index : number) => {
             const question = DATA[index];
+            // @ts-ignore
             return question.validate(value);
         });
 
-        const totalScore = score.reduce((acc, value) => acc + value, 0) / DATA.length
+        const totalScore = score.reduce((acc: any, value: any) => acc + value, 0) / DATA.length
 
         // get score/10 by number of questions
         return totalScore;
@@ -177,6 +178,7 @@ const QCM = () => {
                         </div>
                     ) : (
                         <Content>
+                            {/* @ts-ignore */}
                             <Question data={DATA[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
                             <Button
                                 size="large"
