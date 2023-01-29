@@ -75,7 +75,7 @@ const QCM = () => {
         }
         , [] as number[]);
 
-        return allIndex.some((index) => values[index]);
+        return allIndex.some((index: any) => values[index]);
     }, [values]);
 
     return (
