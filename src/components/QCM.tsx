@@ -1,5 +1,5 @@
 import {Button, Col, Row, Typography} from "antd";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {DATA} from '../constants/data';
 import Question from "./Question";
 import styled, {keyframes} from "styled-components";
@@ -12,17 +12,34 @@ import zaardoz from "../assets/zz.png";
 import {EFFECT_TYPES} from "../constants/questionTypes";
 import miam from '../assets/miam.mp3';
 
+const getRandomQuestionsData = () => {
+    const randomQuestions: any[] = [];
+    while (randomQuestions.length < 15) {
+        const randomIndex = Math.floor(Math.random() * DATA.length);
+        const randomQuestion = DATA[randomIndex];
+        if (!randomQuestions.includes(randomQuestion)) {
+            randomQuestions.push(randomQuestion);
+        }
+    }
+    return randomQuestions;
+}
+
 const QCM = () => {
     const [isStarted, setIsStarted] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
+    const [randomQuestions, setRandomQuestions] = useState(getRandomQuestionsData());
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [values, setValues] = useState<any>(DATA.map((data) => data.default));
+    const [values, setValues] = useState<any>([]);
     const [score, setScore] = useState(0);
+
+    useEffect(() => {
+        setValues(randomQuestions.map((data) => data.default))
+    }, [randomQuestions]);
 
     const sound = new Audio(miam);
 
     const handleNext = () => {
-        if (currentQuestion < DATA.length - 1) {
+        if (currentQuestion < randomQuestions.length - 1) {
             setCurrentQuestion(currentQuestion + 1);
         } else {
             setIsFinished(true);
@@ -38,19 +55,19 @@ const QCM = () => {
 
     const getScore = (newValues: any) => {
         const score = newValues.map((value: any, index : number) => {
-            const question = DATA[index];
+            const question = randomQuestions[index];
             // @ts-ignore
             return question.validate(value);
         });
 
-        const totalScore = score.reduce((acc: any, value: any) => acc + value, 0) / DATA.length
+        const totalScore = score.reduce((acc: any, value: any) => acc + value, 0) / randomQuestions.length
 
         // get score/10 by number of questions
         return totalScore;
     }
 
     const isSumsunVisible = useMemo(() => {
-        const allIndex = DATA.reduce((acc, data, index) => {
+        const allIndex = randomQuestions.reduce((acc, data, index) => {
             if (data.effect === EFFECT_TYPES.SHOW_SUMSUN) {
                 acc.push(index);
             }
@@ -131,34 +148,34 @@ const QCM = () => {
                                 textAlign: 'center',
                                 fontWeight: '900',
                             }}>
-                                Bienvenue à la taverne <span style={{ color: '#FFD700' }}>Des Trois Chaînes</span> !
+                                Re-b'jour mon p'tit <span style={{ color: '#FFD700' }}>client préféré</span> !
                             </Typography.Title>
                             <Typography.Title level={3} style={{
                                 textAlign: 'center',
                                 fontWeight: '900',
                                 width: '100%',
                             }}>
-                                Je me présente,
+                                La taverne est un vrai <span style={{ color: '#FFD700' }}>succès</span> !
                                 <br />
-                                <span style={{ color: '#FFD700' }}>Choumchoum</span>, le barman de la taverne.
+                                Tellement qu'on a du mal a s'entendre ici !
                             </Typography.Title>
                             <Typography.Title level={3} style={{
                                 textAlign: 'center',
                                 fontWeight: '900',
                                 width: '100%',
                             }}>
-                                J'ai ouï dire que tu étais un joueur hors pair d'un certain jeu de géolocalisation !
+                                Bon, <span style={{ color: '#FFD700' }}>mes amis et moi</span> avons un peu <span style={{ color: '#FFD700' }}>r'travaillé</span> ton questionnaire.
                                 <br />
-                                Ce sont mes amis <span style={{ color: '#FFD700' }}>Neos</span> et <span style={{ color: '#FFD700' }}>Nko</span> qui m'ont aidé à bâtir cette taverne.
+                                J'ai aussi eu des <span style={{ color: '#FFD700' }}>echos</span> au d'la de la taverne, comme quoi le questionnaire <span style={{ color: '#FFD700' }}>n'serait pas fiable</span>.
                                 <br />
-                                Et ils m'ont vivement conseillé de miser sur toi !
+                                Mais si tu t'basais pas sur une <span style={{ color: '#FFD700' }}>fausse information</span> pour définir ton objectif, <span style={{ color: '#FFD700' }}>j'aurais p'tet raison</span> !
                             </Typography.Title>
                             <Typography.Title level={3} style={{
                                 textAlign: 'center',
                                 fontWeight: '900',
                                 width: '100%',
                             }}>
-                                Mais avant ça, papotons un peu ! Histoire de savoir si tu vaut le coup !
+                                En tout cas, j'suis <span style={{ color: '#FFD700' }}>content</span> de te revoir, on commence ?
                             </Typography.Title>
                             <Button
                                 size="large"
@@ -179,7 +196,7 @@ const QCM = () => {
                     ) : (
                         <Content>
                             {/* @ts-ignore */}
-                            <Question data={DATA[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
+                            <Question data={randomQuestions[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
                             <Button
                                 size="large"
                                 type="text"

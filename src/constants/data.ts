@@ -115,17 +115,6 @@ export const DATA = [
         }
     },
     {
-        title: 'Portes-tu un pyjama troué actuellement ?',
-        type: QUESTION_TYPES.SWITCH,
-        default: false,
-        validate: (value: boolean) => {
-            if (value) {
-                return 10;
-            }
-            return 5;
-        }
-    },
-    {
         title: 'As-tu acheté une chaise cimetière récemment ?',
         type: QUESTION_TYPES.SWITCH,
         default: false,
@@ -226,6 +215,111 @@ export const DATA = [
                 return 15;
             }
             return 5;
+        }
+    },
+    {
+        title: 'Est ce qu\'il y a eu du bruit pendant ta nuit ?',
+        type: QUESTION_TYPES.MULTIPLE_CHOICE,
+        options: [
+            'Voisins',
+            'Chasseurs',
+            'Rallye',
+        ],
+        default: [],
+        validate: (value: string[]) => {
+            if (value.length === 0) {
+                return 10;
+            }
+            if (value.length === 1) {
+                return -1;
+            }
+            return -2;
+        }
+    },
+    {
+        title: 'Est ce que BabyZaardoz a bien dormis ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'BabyZaardoz s\'est elle transformée en démon ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return -10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'As tu gagné à un jeux d\'argent ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'Quelle(s) boisson(s) chaude(s) as-tu bu aujourd\'hui ?',
+        type: QUESTION_TYPES.MULTIPLE_CHOICE,
+        options: [
+            'Thé',
+            'Café',
+            'Chocolat',
+        ],
+        default: [],
+        validate: (value: string[]) => {
+            if (value.length === 0) {
+                return 0;
+            }
+            if (value.length === 1) {
+                return 5;
+            }
+            return 10;
+        }
+    },
+    {
+        title: 'Portes tu le caleçon préféré de MmeZaardoz ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'Portes tu ton caleçon porte bonheur ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'Combien de trou as-tu aux chaussettes ?',
+        type: QUESTION_TYPES.SLIDER,
+        min: 0,
+        max: 10,
+        unit: 'trou(s)',
+        default: 0,
+        validate: (value: number) => {
+            if (value === 0) {
+                return 10;
+            }
+            if (value < 3) {
+                return 5;
+            }
+            return 0;
         }
     }
 ]
