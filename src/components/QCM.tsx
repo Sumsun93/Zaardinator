@@ -140,7 +140,7 @@ const QCM = () => {
                             }}>
                                 Je me présente,
                                 <br />
-                                <span style={{ color: '#FFD700' }}>Choumchoun</span>, le barman de la taverne.
+                                <span style={{ color: '#FFD700' }}>Choumchoum</span>, le barman de la taverne.
                             </Typography.Title>
                             <Typography.Title level={3} style={{
                                 textAlign: 'center',

@@ -5,7 +5,6 @@ import App from './App'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
     <ConfigProvider
         theme={{
             algorithm: theme.darkAlgorithm,
@@ -21,6 +20,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         }}
     >
         <App />
-    </ConfigProvider>
-  </React.StrictMode>,
+    </ConfigProvider>,
 )

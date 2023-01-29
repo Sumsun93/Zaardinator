@@ -2,7 +2,10 @@ import {Layout, Typography} from "antd";
 import QCM from "../components/QCM";
 import styled from "styled-components";
 import backgroundImage from '../assets/ZZ_QUIZ_BACKGROUND-100.jpg'
+import socketIoClient from "socket.io-client";
+import MessagesContainer from "../components/MessagesContainer";
 
+const socket = socketIoClient('https://zaardinator.onrender.com');
 const Home = () => (
     <Layout
         style={{
@@ -16,6 +19,8 @@ const Home = () => (
             overflow: 'hidden',
         }}
     >
+        <MessagesContainer socket={socket} />
+
         <BgColor />
 
         <Layout.Content style={{
