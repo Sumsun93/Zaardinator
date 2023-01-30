@@ -292,7 +292,7 @@ const QCM = () => {
                         }}>
                             Développé par <span style={{ color: '#FFD700' }}>Sumsun</span>, design par <span style={{ color: '#FFD700' }}>NeosRanger</span>
                             <br />
-                            merci à <span style={{ color: '#FFD700' }}>Nko</span> pour les idées
+                            merci à <span style={{ color: '#FFD700' }}>Nko</span> pour les questions
                         </Typography.Title>
                     </div>
                 </Col>
