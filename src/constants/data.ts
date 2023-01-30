@@ -483,21 +483,21 @@ export const DATA = [
     },
     {
         title: 'Où en est la cheminée ?',
-        type: QUESTION_TYPES.MULTIPLE_CHOICE,
+        type: QUESTION_TYPES.UNIQUE_CHOICE,
         options: [
             'Pas commencé',
             'En cours',
             'Terminé',
         ],
-        default: [],
+        default: '',
         validate: (value: string[]) => {
-            if (value.length === 0) {
-                return 0;
+            if (value[0] === 'Terminé') {
+                return 10;
             }
-            if (value.length === 1) {
+            if (value[0] === 'En cours') {
                 return 5;
             }
-            return 10;
+            return 0;
         }
     },
     {
