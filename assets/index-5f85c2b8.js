@@ -403,7 +403,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   box-shadow: 3px 3px 15px #bbb;
   box-sizing: border-box;
   background-color: #d1d4ea;
-  animation: ${gM} 0.5s ease-in-out 3s forwards;
+  animation: ${gM} 0.5s ease-in-out 5s forwards;
   
   &::before,
   &::after {
