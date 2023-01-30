@@ -239,6 +239,7 @@ export const DATA = [
     {
         title: 'Est ce que BabyZaardoz a bien dormis ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -249,6 +250,7 @@ export const DATA = [
     {
         title: 'BabyZaardoz s\'est elle transformée en démon ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return -10;
@@ -259,6 +261,7 @@ export const DATA = [
     {
         title: 'As tu gagné à un jeux d\'argent ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -288,6 +291,7 @@ export const DATA = [
     {
         title: 'Portes tu le caleçon préféré de MmeZaardoz ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -298,6 +302,7 @@ export const DATA = [
     {
         title: 'Portes tu ton caleçon porte bonheur ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -325,6 +330,7 @@ export const DATA = [
     {
         title: 'Es-tu en pyjama ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -335,6 +341,7 @@ export const DATA = [
     {
         title: 'As-tu lancé le stream a l\'heure ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -345,6 +352,7 @@ export const DATA = [
     {
         title: 'Es-tu arrivé après le décompte du début de stream ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 0;
@@ -355,6 +363,7 @@ export const DATA = [
     {
         title: 'Est-ce que Mushy va bien ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -365,6 +374,7 @@ export const DATA = [
     {
         title: 'Est-ce que le chat va bien ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -375,6 +385,7 @@ export const DATA = [
     {
         title: 'Est-ce que tu nous cache un secret en RP ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -385,6 +396,7 @@ export const DATA = [
     {
         title: 'Est-ce que ton AIM a progressé ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -395,6 +407,7 @@ export const DATA = [
     {
         title: 'As-tu fais de la moto aujourd\'hui ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -405,6 +418,7 @@ export const DATA = [
     {
         title: 'As-tu encore laissé MmeZaardoz s\'occuper des courses ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return -10;
@@ -415,6 +429,7 @@ export const DATA = [
     {
         title: 'Sais tu ce que tu vas manger ce soir ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -425,6 +440,7 @@ export const DATA = [
     {
         title: 'Te souviens tu de ce que tu as mangé hier ? (Dis le à haute voix !)',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -435,6 +451,7 @@ export const DATA = [
     {
         title: 'Es-tu heureux ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -445,6 +462,7 @@ export const DATA = [
     {
         title: 'As-tu offert un cadeau a MmeZaardoz ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -455,6 +473,7 @@ export const DATA = [
     {
         title: 'Le copain chien de Mushy va bien ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -509,6 +528,7 @@ export const DATA = [
     {
         title: 'Vas tu jouer a un jeu qui te hype a fond ce soir ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
@@ -543,6 +563,7 @@ export const DATA = [
     {
         title: 'As-tu grandis cette nuit ?',
         type: QUESTION_TYPES.SWITCH,
+        default: false,
         validate: (value: boolean) => {
             if (value) {
                 return 10;
