@@ -155,7 +155,7 @@ const ComicsBubble = styled.div`
   box-shadow: 3px 3px 15px #bbb;
   box-sizing: border-box;
   background-color: #d1d4ea;
-  animation: ${fadeOut} 0.5s ease-in-out 3s forwards;
+  animation: ${fadeOut} 0.5s ease-in-out 5s forwards;
   
   &::before,
   &::after {
