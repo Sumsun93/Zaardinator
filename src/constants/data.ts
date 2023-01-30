@@ -321,5 +321,233 @@ export const DATA = [
             }
             return 0;
         }
+    },
+    {
+        title: 'Es-tu en pyjama ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'As-tu lancé le stream a l\'heure ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'Es-tu arrivé après le décompte du début de stream ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 0;
+            }
+            return 10;
+        }
+    },
+    {
+        title: 'Est-ce que Mushy va bien ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Est-ce que le chat va bien ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Est-ce que tu nous cache un secret en RP ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 10;
+        }
+    },
+    {
+        title: 'Est-ce que ton AIM a progressé ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'As-tu fais de la moto aujourd\'hui ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'As-tu encore laissé MmeZaardoz s\'occuper des courses ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return -10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'Sais tu ce que tu vas manger ce soir ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Te souviens tu de ce que tu as mangé hier ? (Dis le à haute voix !)',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Es-tu heureux ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
+    },
+    {
+        title: 'As-tu offert un cadeau a MmeZaardoz ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Le copain chien de Mushy va bien ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Où en est la cheminée ?',
+        type: QUESTION_TYPES.MULTIPLE_CHOICE,
+        options: [
+            'Pas commencé',
+            'En cours',
+            'Terminé',
+        ],
+        default: [],
+        validate: (value: string[]) => {
+            if (value.length === 0) {
+                return 0;
+            }
+            if (value.length === 1) {
+                return 5;
+            }
+            return 10;
+        }
+    },
+    {
+        title: 'Quand sort OptionRP (go vous WL bande fous) ?',
+        type: QUESTION_TYPES.SLIDER,
+        min: 0,
+        max: 36,
+        unit: 'mois',
+        default: 0,
+        validate: (value: number) => {
+            return 10;
+        }
+    },
+    {
+        title: 'Bravo, aujourd\'hui tu as eu un bonus !<br/>Pas besoin de répondre à la question, tu as gagné des points !',
+        type: QUESTION_TYPES.NONE,
+        validate: (value: any) => {
+            return 10;
+        }
+    },
+    {
+        title: 'Oups, pas de chance cette fois !<br/>Pas besoin de répondre à la question, tu as perdu des points...',
+        type: QUESTION_TYPES.NONE,
+        validate: (value: any) => {
+            return 0;
+        }
+    },
+    {
+        title: 'Vas tu jouer a un jeu qui te hype a fond ce soir ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 0;
+        }
+    },
+    {
+        title: 'Combien payes tu tes modérateurs ?',
+        type: QUESTION_TYPES.UNIQUE_CHOICE,
+        options: [
+            'Ce sont des esclaves',
+            'Ne se prononce pas',
+            'Quand ils travailleront vraiment'
+        ],
+        default: '',
+        validate: (value: string) => {
+            return 10;
+        }
+    },
+    {
+        title: 'Quand vas tu enfin envoyer le cadeau pour Nko ?',
+        type: QUESTION_TYPES.SLIDER,
+        min: 0,
+        max: 365,
+        unit: 'jour(s)',
+        default: 0,
+        validate: (value: number) => {
+            return 10;
+        }
+    },
+    {
+        title: 'As-tu grandis cette nuit ?',
+        type: QUESTION_TYPES.SWITCH,
+        validate: (value: boolean) => {
+            if (value) {
+                return 10;
+            }
+            return 5;
+        }
     }
 ]

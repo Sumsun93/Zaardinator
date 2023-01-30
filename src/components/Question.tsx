@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
 import {EFFECT_TYPES, QUESTION_TYPES} from "../constants/questionTypes";
 import {Button, Slider, Typography} from "antd";
+import {useMemo} from "react";
 
 type QuestionProps = {
     data: {
@@ -21,28 +21,40 @@ type QuestionProps = {
     setValue?: any,
 }
 
-const Template = ({ data, children, value }: QuestionProps) => (
-    <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        filter: data.effect === EFFECT_TYPES.BLUR ? `blur(${value / 10}px)` : 'none',
-        marginBottom: '100px',
-    }}>
-        <Typography.Title
-            level={1}
-            style={{
-                fontWeight: 900,
-                marginBottom: '100px',
-            }}
-        >
-            {data.title}
-        </Typography.Title>
+const Template = ({ data, children, value }: QuestionProps) => {
+    const getFormattedTitle = useMemo(() => {
+        return data.title.split('<br/>');
+    }, [data.title]);
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            filter: data.effect === EFFECT_TYPES.BLUR ? `blur(${value / 10}px)` : 'none',
+            marginBottom: '100px',
+        }}>
+            <Typography.Title
+                level={1}
+                style={{
+                    fontWeight: 900,
+                    marginBottom: '100px',
+                    textAlign: 'center',
+                    width: '100%',
+                }}
+            >
+                {getFormattedTitle.map((text) => (
+                    <>
+                        {text}
+                        {text !== getFormattedTitle[getFormattedTitle.length - 1] && <br/>}
+                    </>
+                ))}
+            </Typography.Title>
 
-        {children}
-    </div>
-)
+            {children}
+        </div>
+    )
+}
 
 const Question = ({ data, value, setValue }: QuestionProps) => {
     switch (data.type) {
@@ -166,6 +178,45 @@ const Question = ({ data, value, setValue }: QuestionProps) => {
                             </Button>
                         ))}
                     </div>
+                </Template>
+            );
+        case QUESTION_TYPES.UNIQUE_CHOICE:
+            return (
+                <Template data={data} value={value}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {data.options?.map((option, index) => (
+                            <Button
+                                key={index}
+                                type={'primary'}
+                                ghost={value !== option}
+                                onClick={() => setValue(option)}
+                                style={{
+                                    marginRight: index !== (data.options?.length || 0) - 1 ? '1em' : 0,
+                                    fontSize: '3em',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    outline: 'none',
+                                    padding: '30px',
+                                    color: value !== option ? 'white' : 'black',
+                                }}
+                            >
+                                {option}
+                            </Button>
+                        ))}
+                    </div>
+                </Template>
+            );
+        case QUESTION_TYPES.NONE:
+            return (
+                <Template data={data} value={value}>
+                    <></>
                 </Template>
             );
 
