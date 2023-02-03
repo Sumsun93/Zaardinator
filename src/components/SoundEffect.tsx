@@ -1,6 +1,7 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 import {useEffect, useState} from "react";
+import {setShortEffect} from "../redux/features/game/gameSlice";
 import forest from '../assets/sounds/forest.wav';
 import tavernAmbient from '../assets/sounds/tavernAmbient.wav';
 import tavernGood from '../assets/sounds/tavernGood.wav';
@@ -14,6 +15,8 @@ import potionDone from '../assets/sounds/potionDone.wav';
 import potionGet from '../assets/sounds/potionGet.wav';
 import princessDone from '../assets/sounds/princessDone.wav';
 import princessSad from '../assets/sounds/princessSad.wav';
+import bye_colby from '../assets/sounds/bye_colby.mp3';
+import miam from '../assets/sounds/miam.mp3';
 
 export enum SOUNDS {
     NONE = 'none',
@@ -30,6 +33,8 @@ export enum SOUNDS {
     POTION_GET = 'potionGet',
     PRINCESS_DONE = 'princessDone',
     PRINCESS_SAD = 'princessSad',
+    BYE_COLBY = 'bye_colby',
+    MIAM = 'miam',
 }
 
 const SoundEffect = () => {
@@ -40,6 +45,7 @@ const SoundEffect = () => {
         shortEffect,
         shortEffectVolumeModifier,
     } = useSelector((state: RootState) => state.game);
+    const dispatch = useDispatch();
     const [currentSound, setCurrentSound] = useState<HTMLAudioElement | null>(null);
 
     const sounds = {
@@ -56,6 +62,8 @@ const SoundEffect = () => {
         potionGet,
         princessDone,
         princessSad,
+        bye_colby,
+        miam,
     }
 
     useEffect(() => {
@@ -77,6 +85,9 @@ const SoundEffect = () => {
             const sound = new Audio(sounds[shortEffect]);
             sound.volume = volume * (shortEffectVolumeModifier || 1);
             sound.play();
+            dispatch(setShortEffect({
+                sound: SOUNDS.NONE
+            }))
         }
     }, [shortEffect]);
 

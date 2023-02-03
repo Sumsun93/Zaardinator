@@ -2,7 +2,7 @@ import {Button, Col, Row} from "antd";
 import styled from "styled-components";
 // import barman from "../assets/ZZ_QUIZ_Barman.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setInit, setSoundToPlay} from "../redux/features/game/gameSlice";
+import {setInit, setShortEffect, setSoundToPlay} from "../redux/features/game/gameSlice";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import Layout from "./Layout";
@@ -80,6 +80,12 @@ const Home = () => {
             <Tombe
                 src={tombe}
                 alt="tombe"
+                onClick={() => {
+                    dispatch(setShortEffect({
+                        sound: SOUNDS.BYE_COLBY,
+                        volumeModifier: 2,
+                    }))
+                }}
             />
             <Row gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
                 marginTop: 30,
