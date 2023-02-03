@@ -2,15 +2,23 @@ import {Button, Col, Row, Typography} from "antd";
 import {useEffect, useMemo, useState} from "react";
 import {DATA} from '../constants/data';
 import Question from "./Question";
-import styled, {keyframes} from "styled-components";
-import comptoir from '../assets/ZZ_QUIZ_comptoir.svg';
-import barman from '../assets/ZZ_QUIZ_Barman.svg';
-import alcoolique from '../assets/ZZ_QUIZ_alcoolique.svg';
+import styled, {css, keyframes} from "styled-components";
+import comptoir from '../assets/tavern/ZZ_QUIZ_comptoir.svg';
+import barman from '../assets/tavern/ZZ_QUIZ_Barman.svg';
+import alcoolique from '../assets/tavern/ZZ_QUIZ_alcoolique.svg';
 import sumsunCage from '../assets/ZZ_QUIZ_Sumsunn.svg';
-import pancarte from "../assets/ZZ_QUIZ_Pancarte.svg";
-import zaardoz from "../assets/zz.png";
+import pancarte from "../assets/tavern/ZZ_QUIZ_Pancarte.svg";
 import {EFFECT_TYPES} from "../constants/questionTypes";
 import miam from '../assets/miam.mp3';
+import MessagesContainer from "./MessagesContainer";
+import questItem from '../assets/ZZ_Overlay_Potion_QUETE.svg';
+import chop from '../assets/tavern/ZZ_QUIZ_Chope.svg';
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../redux/store";
+import QUEST_STATES from "../constants/questStates";
+import {setItemInventory, setQuestState, setShortEffect} from "../redux/features/game/gameSlice";
+import ITEMS from "../constants/items";
+import {SOUNDS} from "./SoundEffect";
 
 const getRandomQuestionsData = () => {
     const randomQuestions: any[] = [];
@@ -25,6 +33,9 @@ const getRandomQuestionsData = () => {
 }
 
 const QCM = () => {
+    const {questState} = useSelector((state: RootState) => state.game);
+    const dispatch = useDispatch();
+
     const [isStarted, setIsStarted] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
     const [randomQuestions, setRandomQuestions] = useState(getRandomQuestionsData());
@@ -43,6 +54,18 @@ const QCM = () => {
             setCurrentQuestion(currentQuestion + 1);
         } else {
             setIsFinished(true);
+
+            if (score > 5) {
+                dispatch(setShortEffect({
+                    sound: SOUNDS.TAVERN_GOOD,
+                    volumeModifier: 0.05,
+                }))
+            } else {
+                dispatch(setShortEffect({
+                    sound: SOUNDS.TAVERN_BAD,
+                    volumeModifier: 0.05,
+                }))
+            }
         }
     }
 
@@ -60,10 +83,7 @@ const QCM = () => {
             return question.validate(value);
         });
 
-        const totalScore = score.reduce((acc: any, value: any) => acc + value, 0) / randomQuestions.length
-
-        // get score/10 by number of questions
-        return totalScore;
+        return score.reduce((acc: any, value: any) => acc + value, 0) / randomQuestions.length
     }
 
     const isSumsunVisible = useMemo(() => {
@@ -82,141 +102,87 @@ const QCM = () => {
         <Row gutter={[24, 24]} justify={'space-between'} align={'middle'} style={{
             marginTop: 30,
         }}>
-            <Button
-                type="link"
-                href="https://twitch.tv/zaardoz"
-                target="_blank"
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    zIndex: 10,
-                }}
-            >
-                <Zaardoz src={zaardoz} alt="zaardoz" />
-            </Button>
-            {!isStarted && (
-                <BarmanFirst
-                    src={barman}
-                    alt="barman"
+            <MessagesContainer />
+            {questState === QUEST_STATES.STATE_2 && (
+                <QuestItem
+                    src={questItem}
+                    alt="Item de quête"
                 />
             )}
-            {isStarted && (
-                <>
-                    <Comptoir
-                        src={comptoir}
-                        alt="comptoir"
+            <ChopContainer
+                onClick={() => {
+                    if (questState === QUEST_STATES.STATE_2) {
+                        dispatch(setQuestState(QUEST_STATES.STATE_3));
+                        dispatch(setItemInventory(ITEMS.POTION_1));
+                        dispatch(setShortEffect({
+                            sound: SOUNDS.POTION_GET,
+                            volumeModifier: 0.2,
+                        }));
+                    }
+                }}
+                needMove={questState === QUEST_STATES.STATE_2}
+            >
+                <Chop
+                    src={chop}
+                    alt="Chope de bière"
+                />
+            </ChopContainer>
+            <Comptoir
+                src={comptoir}
+                alt="comptoir"
+            />
+            <Pancarte
+                src={pancarte}
+                alt="pancarte"
+                onClick={() => {
+                    sound.play();
+                }}
+            />
+            <Barman
+                src={barman}
+                alt="barman"
+                onClick={() => {
+                    if (!isStarted) {
+                        setIsStarted(true);
+                    }
+                }}
+            />
+            <Alcoolique
+                src={alcoolique}
+                alt="alcoolique"
+            />
+            {isSumsunVisible && (
+                <SumsunContainer>
+                    <SumsunCage
+                        src={sumsunCage}
+                        alt="sumsunCage"
                     />
-                    <Pancarte
-                        src={pancarte}
-                        alt="pancarte"
-                        onClick={() => {
-                            sound.play();
-                        }}
-                    />
-                    <Barman
-                        src={barman}
-                        alt="barman"
-                    />
-                    <Alcoolique
-                        src={alcoolique}
-                        alt="alcoolique"
-                    />
-                    {isSumsunVisible && (
-                        <SumsunContainer>
-                            <SumsunCage
-                                src={sumsunCage}
-                                alt="sumsunCage"
-                            />
-                        </SumsunContainer>
-                    )}
-                </>
+                </SumsunContainer>
             )}
-            {!isFinished && (
+            {!isFinished && isStarted && (
                 <Col span={24} style={{ display: 'flex', justifyContent: 'center', zIndex: 10 }}>
-                    {!isStarted ? (
-                        <div
+                    <Content>
+                        {/* @ts-ignore */}
+                        <Question data={randomQuestions[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
+                        <Button
+                            size="large"
+                            type="text"
                             style={{
+                                outline: 'none',
+                                border: 'none',
+                                marginTop: 30,
+                                fontSize: '2.5em',
                                 display: 'flex',
-                                flexDirection: 'column',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                width: '100%',
+                                textTransform: 'uppercase',
+                                padding: '30px',
                             }}
+                            onClick={handleNext}
                         >
-                            <Typography.Title level={1} style={{
-                                textAlign: 'center',
-                                fontWeight: '900',
-                            }}>
-                                Re-b'jour mon p'tit <span style={{ color: '#FFD700' }}>client préféré</span> !
-                            </Typography.Title>
-                            <Typography.Title level={3} style={{
-                                textAlign: 'center',
-                                fontWeight: '900',
-                                width: '100%',
-                            }}>
-                                La taverne est un vrai <span style={{ color: '#FFD700' }}>succès</span> !
-                                <br />
-                                Tellement qu'on a du mal a s'entendre ici !
-                            </Typography.Title>
-                            <Typography.Title level={3} style={{
-                                textAlign: 'center',
-                                fontWeight: '900',
-                                width: '100%',
-                            }}>
-                                Bon, <span style={{ color: '#FFD700' }}>mes amis et moi</span> avons un peu <span style={{ color: '#FFD700' }}>r'travaillé</span> ton questionnaire.
-                                <br />
-                                J'ai aussi eu des <span style={{ color: '#FFD700' }}>echos</span> au d'la de la taverne, comme quoi le questionnaire <span style={{ color: '#FFD700' }}>n'serait pas fiable</span>.
-                                <br />
-                                Mais si tu t'basais pas sur une <span style={{ color: '#FFD700' }}>fausse information</span> pour définir ton objectif, <span style={{ color: '#FFD700' }}>j'aurais p'tet raison</span> !
-                            </Typography.Title>
-                            <Typography.Title level={3} style={{
-                                textAlign: 'center',
-                                fontWeight: '900',
-                                width: '100%',
-                            }}>
-                                En tout cas, j'suis <span style={{ color: '#FFD700' }}>content</span> de te revoir, on commence ?
-                            </Typography.Title>
-                            <Button
-                                size="large"
-                                style={{
-                                    marginTop: 30,
-                                    fontSize: '2.5em',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    padding: '30px',
-                                    backgroundColor: 'transparent',
-                                }}
-                                onClick={() => setIsStarted(true)}
-                            >
-                                Démarrer
-                            </Button>
-                        </div>
-                    ) : (
-                        <Content>
-                            {/* @ts-ignore */}
-                            <Question data={randomQuestions[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
-                            <Button
-                                size="large"
-                                type="text"
-                                style={{
-                                    outline: 'none',
-                                    border: 'none',
-                                    marginTop: 30,
-                                    fontSize: '2.5em',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    textTransform: 'uppercase',
-                                    padding: '30px',
-                                }}
-                                onClick={handleNext}
-                            >
-                                Suivant
-                            </Button>
-                        </Content>
-                    )}
+                            Suivant
+                        </Button>
+                    </Content>
                 </Col>
             )}
             {isFinished && (
@@ -282,18 +248,6 @@ const QCM = () => {
                         }}>
                             Une petite bière pour la route ?
                         </Typography.Title>
-
-                        <Typography.Title level={5} style={{
-                            textAlign: 'center',
-                            fontWeight: '900',
-                            width: '100%',
-                            position: 'fixed',
-                            bottom: 0,
-                        }}>
-                            Développé par <span style={{ color: '#FFD700' }}>Sumsun</span>, design par <span style={{ color: '#FFD700' }}>NeosRanger</span>
-                            <br />
-                            merci à <span style={{ color: '#FFD700' }}>Nko</span> pour les questions
-                        </Typography.Title>
                     </div>
                 </Col>
             )}
@@ -330,7 +284,7 @@ const Content = styled.div`
     width: 100%;
     padding: 0 20px;
     opacity: 0;
-    animation: ${fadeIn} 1s ease-in-out 2s;
+    animation: ${fadeIn} 1s ease-in-out;
     animation-fill-mode: forwards;
 `;
 
@@ -352,25 +306,50 @@ const slideFromLeft = keyframes`
     }
 `;
 
-const Zaardoz = styled.img`
+const QuestItem = styled.img`
     position: absolute;
-    top: 40px;
-    left: 40px;
-    height: 10vh;
-    z-index: 5;
+    bottom: 35vh;
+    right: 47vh;
+    height: 14vh;
+    z-index: 10;
+    opacity: 0;
+    animation: ${fadeIn} 1s ease-in-out 2s;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+`;
+
+const Chop = styled.img`
+    height: 11vh;
+    transition: .5s;
+    transition-delay: .3s;
+`;
+
+const ChopContainer = styled.div`
+    position: absolute;
+    bottom: 37.1vh;
+    right: 47vh;
+    z-index: 11;
+    opacity: 0;
+    animation: ${fadeIn} 1s ease-in-out 1.5s;
+    animation-fill-mode: forwards;
   
-    &:hover {
-      filter: drop-shadow(0 0 0.75rem #FFD700);
-    }
+    ${({ needMove }: { needMove: boolean }) => needMove && css`
+        &:hover {
+            ${Chop} {
+                transform: translateX(70%);
+            }
+        }
+    `}
 `;
 
 const Comptoir = styled.img`
     position: absolute;
     bottom: 0;
-    right: 0;
-    height: 43vh;
+    right: -70vh;
+    height: 52vh;
     z-index: 10;
     animation: ${slideFromRight} 1s ease-in-out;
+    pointer-events: none;
 `;
 
 const Pancarte = styled.img`
@@ -393,26 +372,12 @@ const Barman = styled.img`
     transform: translateX(100%);
     animation: ${slideFromRight} 1s ease-in-out 1.5s;
     animation-fill-mode: forwards;
-`;
-
-// animation slide from left and grayscale
-const slideFromLeftWithGrey = keyframes`
-    0% {
-        transform: translateX(-150%) scaleX(-1);
+    cursor: pointer;
+    transition: .2s;
+  
+    &:hover {
+      filter: drop-shadow(0 0 0.5rem #FFD700);
     }
-    100% {
-        transform: translateX(0) scaleX(-1);
-    }
-`;
-
-const BarmanFirst = styled.img`
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 75vh;
-    z-index: 9;
-    transform: scaleX(-1);
-    animation: ${slideFromLeftWithGrey} 1s ease-in-out;
 `;
 
 const Alcoolique = styled.img`

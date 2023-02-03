@@ -12,11 +12,19 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
+    "@types/react-speech-recognition": "^3.9.0",
     "@types/styled-components": "^5.1.26",
     "antd": "^5.1.6",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.0",
+    "react-speech-recognition": "^3.10.0",
     "socket.io-client": "^4.5.4",
     "styled-components": "^5.3.6"
   },

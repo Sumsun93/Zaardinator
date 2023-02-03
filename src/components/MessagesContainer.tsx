@@ -1,14 +1,9 @@
-import {useCallback, useEffect, useState} from "react";
-import {Socket} from "socket.io-client";
+import {useEffect, useState} from "react";
+import socketIoClient from "socket.io-client";
 import styled, {keyframes} from "styled-components";
 
-type MessagesContainerProps = {
-    socket: Socket;
-}
-
-const MessagesContainer = ({
-    socket
-}: MessagesContainerProps) => {
+const socket = socketIoClient('https://zaardinator.onrender.com');
+const MessagesContainer = ({}) => {
     const [messages, setMessages] = useState<any>([]);
 
     const getRandomePositionInScreenView = () => {
@@ -86,7 +81,7 @@ const MessagesContainer = ({
 
     return (
         <Container>
-            {messages.map(({message, x, y, tags}: any, index: number) => (
+            {messages.map(({message, x, y, tags}: any) => (
                 <ComicsBubbleContainer
                     key={tags.id}
                     top={y}
@@ -127,6 +122,8 @@ const fadeOut = keyframes`
 
 const Container = styled.div`
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
