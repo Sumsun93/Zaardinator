@@ -6,7 +6,7 @@ import {setInit, setShortEffect, setSoundToPlay} from "../redux/features/game/ga
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import Layout from "./Layout";
-import backgroundImage from '../assets/extTavern/ZZ_QUIZ_TAVERNE_EXTERIEUR.jpg'
+import backgroundImage from '../assets/extTavern/ZZ_QUIZ_TAVERNE_EXTERIEUR.webp'
 // import aly from '../assets/extTavern/ZZ_QUIZ_ALLY.svg';
 import tombe from '../assets/extTavern/ZZ_QUIZ_Tombe.svg';
 import {RootState} from "../redux/store";

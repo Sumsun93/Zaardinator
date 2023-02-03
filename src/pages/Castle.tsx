@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import {addBgPositionValue, setSoundToPlay} from "../redux/features/game/gameSlice";
 import {useEffect, useRef} from "react";
 import Layout from "./Layout";
-import backgroundImage from '../assets/castle/ZZ_QUIZ_CHATEAU_ENTREE_LARGE.jpg'
+import backgroundImage from '../assets/castle/ZZ_QUIZ_CHATEAU_ENTREE_LARGE.webp'
 import {useNavigate} from "react-router-dom";
 import {SOUNDS} from "../components/SoundEffect";
 
