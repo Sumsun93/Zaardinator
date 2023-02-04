@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import {Button, Row} from "antd";
 import styled, {css, keyframes} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
@@ -22,12 +23,16 @@ import DropContainer from "../components/DropContainer";
 import ITEMS from "../constants/items";
 import {useEffect, useMemo} from "react";
 import {SOUNDS} from "../components/SoundEffect";
+import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
     const {questState} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {
+        transcript,
+    } = useSpeechRecognition();
 
     const goDonjon = () => {
         navigate('/castle-donjon');
@@ -44,9 +49,17 @@ const Labo = () => {
         if (questState === QUEST_STATES.STATE_4) {
             setTimeout(() => {
                 dispatch(setQuestState(QUEST_STATES.STATE_5));
+                SpeechRecognition.startListening();
             }, 3000);
         }
     }, [questState]);
+
+    useEffect(() => {
+        if (transcript.toLowerCase().includes('abracadabra')) {
+            SpeechRecognition.stopListening();
+            dispatch(setQuestState(QUEST_STATES.STATE_6));
+        }
+    }, [transcript]);
 
     const onDrop = ({
         neededState,
