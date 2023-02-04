@@ -2,7 +2,7 @@ import {Button, Row} from "antd";
 import styled, {css, keyframes} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "./Layout";
-import backgroundImage from '../assets/labo/ZZ_QUIZ_LABORATOIRE.jpg';
+import backgroundImage from '../assets/labo/ZZ_QUIZ_LABORATOIRE.webp';
 import table1 from '../assets/labo/ZZ_QUIZ_TABLE_1.svg';
 import table2 from '../assets/labo/ZZ_QUIZ_TABLE_2.svg';
 import table3 from '../assets/labo/ZZ_QUIZ_TABLE_3.svg';

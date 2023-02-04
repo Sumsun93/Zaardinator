@@ -2,12 +2,13 @@ import {Button, Col, Row} from "antd";
 import styled from "styled-components";
 // import barman from "../assets/ZZ_QUIZ_Barman.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setInit, setSoundToPlay} from "../redux/features/game/gameSlice";
+import {setInit, setShortEffect, setSoundToPlay} from "../redux/features/game/gameSlice";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import Layout from "./Layout";
-import backgroundImage from '../assets/extTavern/ZZ_QUIZ_TAVERNE_EXTERIEUR.jpg'
-import aly from '../assets/extTavern/ZZ_QUIZ_ALLY.svg';
+import backgroundImage from '../assets/extTavern/ZZ_QUIZ_TAVERNE_EXTERIEUR.webp'
+// import aly from '../assets/extTavern/ZZ_QUIZ_ALLY.svg';
+import tombe from '../assets/extTavern/ZZ_QUIZ_Tombe.svg';
 import {RootState} from "../redux/store";
 import {SOUNDS} from "../components/SoundEffect";
 
@@ -76,9 +77,15 @@ const Home = () => {
                     </Button>
                 </div>
             )}
-            <Aly
-                src={aly}
-                alt="aly"
+            <Tombe
+                src={tombe}
+                alt="tombe"
+                onClick={() => {
+                    dispatch(setShortEffect({
+                        sound: SOUNDS.BYE_COLBY,
+                        volumeModifier: 2,
+                    }))
+                }}
             />
             <Row gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
                 marginTop: 30,
@@ -94,11 +101,11 @@ const Home = () => {
 
 export default Home
 
-const Aly = styled.img`
+const Tombe = styled.img`
     position: absolute;
     bottom: 5vh;
-    left: 10vw;
-    height: 32vh;
+    left: 15vw;
+    height: 20vh;
     z-index: 5;
 `;
 

@@ -9,7 +9,6 @@ import alcoolique from '../assets/tavern/ZZ_QUIZ_alcoolique.svg';
 import sumsunCage from '../assets/ZZ_QUIZ_Sumsunn.svg';
 import pancarte from "../assets/tavern/ZZ_QUIZ_Pancarte.svg";
 import {EFFECT_TYPES} from "../constants/questionTypes";
-import miam from '../assets/miam.mp3';
 import MessagesContainer from "./MessagesContainer";
 import questItem from '../assets/ZZ_Overlay_Potion_QUETE.svg';
 import chop from '../assets/tavern/ZZ_QUIZ_Chope.svg';
@@ -46,8 +45,6 @@ const QCM = () => {
     useEffect(() => {
         setValues(randomQuestions.map((data) => data.default))
     }, [randomQuestions]);
-
-    const sound = new Audio(miam);
 
     const handleNext = () => {
         if (currentQuestion < randomQuestions.length - 1) {
@@ -135,7 +132,9 @@ const QCM = () => {
                 src={pancarte}
                 alt="pancarte"
                 onClick={() => {
-                    sound.play();
+                    dispatch(setShortEffect({
+                        sound: SOUNDS.MIAM,
+                    }))
                 }}
             />
             <Barman

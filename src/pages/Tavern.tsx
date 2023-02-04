@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import Layout from "./Layout";
-import backgroundImage from '../assets/tavern/ZZ_QUIZ_TAVERNE_NUIT.jpg';
+import backgroundImage from '../assets/tavern/ZZ_QUIZ_TAVERNE_NUIT.webp';
 import QCM from "../components/QCM";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";

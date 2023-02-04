@@ -2,7 +2,7 @@ import {Button, Col, Row} from "antd";
 import styled, {keyframes} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "./Layout";
-import backgroundImage from '../assets/bedroom/ZZ_QUIZ_CHAMBRE.jpg'
+import backgroundImage from '../assets/bedroom/ZZ_QUIZ_CHAMBRE.webp'
 import princess1 from '../assets/bedroom/ZZ_QUIZ_Phantome_B.svg'
 import princess2 from '../assets/bedroom/ZZ_QUIZ_Phantome_Transformation.svg'
 import chandelier from '../assets/bedroom/ZZ_QUIZ_LUSTRE.svg'
