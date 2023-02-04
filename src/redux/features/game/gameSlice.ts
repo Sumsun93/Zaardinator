@@ -22,8 +22,8 @@ export interface GameState {
 const initialState: GameState = {
     isInit: false,
     bgPosition: 0,
-    questState: localStorage.getItem('questPrincess') ? localStorage.getItem('questPrincess') as QUEST_STATES : QUEST_STATES.NOT_STARTED,
-    itemInventory: localStorage.getItem('itemInventory') ? localStorage.getItem('itemInventory') as ITEMS : ITEMS.NONE,
+    questState: localStorage.getItem('questPrincess') ? localStorage.getItem('questPrincess') as QUEST_STATES : QUEST_STATES.STATE_3,
+    itemInventory: localStorage.getItem('itemInventory') ? localStorage.getItem('itemInventory') as ITEMS : ITEMS.POTION_1,
     settings: {
         openEscapeMenu: false,
         volume: localStorage.getItem('volume') ? parseFloat(localStorage.getItem('volume') as string) : 0.5,

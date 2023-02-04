@@ -23,7 +23,8 @@ import DropContainer from "../components/DropContainer";
 import ITEMS from "../constants/items";
 import {useEffect, useMemo} from "react";
 import {SOUNDS} from "../components/SoundEffect";
-import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
+import useSpeechRecognition from "../hooks/useSpeechRecognition";
+
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
@@ -32,7 +33,10 @@ const Labo = () => {
     const navigate = useNavigate();
     const {
         transcript,
+        startListening,
+        stopListening,
     } = useSpeechRecognition();
+
 
     const goDonjon = () => {
         navigate('/castle-donjon');
@@ -49,15 +53,19 @@ const Labo = () => {
         if (questState === QUEST_STATES.STATE_4) {
             setTimeout(() => {
                 dispatch(setQuestState(QUEST_STATES.STATE_5));
-                SpeechRecognition.startListening();
+                startListening();
             }, 3000);
         }
     }, [questState]);
 
     useEffect(() => {
         if (transcript.toLowerCase().includes('abracadabra')) {
-            SpeechRecognition.stopListening();
+            stopListening();
             dispatch(setQuestState(QUEST_STATES.STATE_6));
+            dispatch(setShortEffect({
+                sound: SOUNDS.POTION_DONE,
+                volumeModifier: 0.2,
+            }))
         }
     }, [transcript]);
 
