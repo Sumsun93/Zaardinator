@@ -3,13 +3,15 @@ import Layout from "./Layout";
 import backgroundImage from '../assets/tavern/ZZ_QUIZ_TAVERNE_NUIT.webp';
 import QCM from "../components/QCM";
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import usePlayRandomSoundEffect from "../hooks/usePlayRandomSoundEffect";
+import {getRandomInterval} from "../utils/random";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Tavern = () => {
+    const playRandomSoundEffectTimeout = useRef<null | number>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -33,6 +35,13 @@ const Tavern = () => {
         SOUNDS.MALE_YAWN_2,
     ]);
 
+    const setPlayRandomSoundEffectTimeout = useCallback(() => {
+        playRandomSoundEffectTimeout.current = setTimeout(() => {
+            playRandomSoundEffect();
+            setPlayRandomSoundEffectTimeout();
+        }, getRandomInterval(5000, 10000));
+    }, [playRandomSoundEffect]);
+
     useEffect(() => {
         dispatch(setSoundToPlay({
             sound: SOUNDS.TAVERN_ANBIENT,
@@ -42,11 +51,13 @@ const Tavern = () => {
     }, []);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            playRandomSoundEffect();
-        }, 5000);
+        setPlayRandomSoundEffectTimeout();
 
-        return () => clearInterval(interval);
+        return () => {
+            if (playRandomSoundEffectTimeout.current) {
+                clearInterval(playRandomSoundEffectTimeout.current);
+            }
+        };
     }, []);
 
     const goExtTavern = () => {
