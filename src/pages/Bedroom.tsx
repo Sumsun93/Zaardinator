@@ -113,6 +113,7 @@ const Bedroom = () => {
                             width: '30%',
                         }}
                         content={[
+                            '“ Une lumière intense jaillit alors dans la pièce, tu es éblouis et confus mais tu te sens bien. Une chaleur douce s’empare de ton corps, tu es comme bercé d’une sérénité sans pareil. C’est à ce moment là qu’une main vient se poser sur la tienne.”',
                             'Je ne comprends pas, on m’a jeté un sort avant que je puisse le chanter en public…',
                         ]}
                         onEnd={() => {
