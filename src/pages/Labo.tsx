@@ -20,14 +20,15 @@ import {
 } from "../redux/features/game/gameSlice";
 import DropContainer from "../components/DropContainer";
 import ITEMS from "../constants/items";
-import {useEffect, useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {SOUNDS} from "../components/SoundEffect";
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
 import Neos from "../components/Characters/Neos/Neos";
+import ComicsBubble from "../components/ComicsBubble";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
-    const {questState} = useSelector((state: RootState) => state.game);
+    const {questState, itemInventory} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
@@ -35,6 +36,8 @@ const Labo = () => {
         startListening,
         stopListening,
     } = useSpeechRecognition();
+
+    const [isBlackScreen, setIsBackScreen] = useState(true);
 
     const goDonjon = () => {
         navigate('/castle-donjon');
@@ -126,6 +129,27 @@ const Labo = () => {
             ]}
             locationName={'Laboratoire du Mage'}
         >
+            {questState === QUEST_STATES.STATE_1 && isBlackScreen && (
+                <>
+                    <BlackScreen />
+                    <ComicsBubble
+                        style={{
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-100%, -100%)',
+                            width: '50%',
+                            zIndex: 100,
+                        }}
+                        isNarrator
+                        content={[
+                            'Tu pénètres alors l’antre du Grand Mage, la gorge serrée et le ventre noué. Tu as longuement réfléchi à comment tu allais te présenter. Il va de soi qu’il faudra également complimenter et approuver tout ce que ce terrible Mage allait dire et faire.'
+                        ]}
+                        onEnd={() => {
+                            setIsBackScreen(false);
+                        }}
+                    />
+                </>
+            )}
             <DropContainer onDrop={onDrop(
                 {
                     neededState: QUEST_STATES.STATE_3,
@@ -151,40 +175,88 @@ const Labo = () => {
                 />
             </DropContainer>
 
+            {questState === QUEST_STATES.STATE_1 && !isBlackScreen && (
+                <ComicsBubble
+                    style={{
+                        position: 'absolute',
+                        left: '70vh',
+                        bottom: '30vh',
+                        zIndex: 15,
+                        width: 400,
+                    }}
+                    content={[
+                        'Hey’ salut ! Wouha mais qu’est ce que tu fais ici d’abord ? Oh et puis c’est le crâne de tante Marge que t’as dans les mains t’es un voleur c’est ça ?! J’vais appeler mon popa, tu vas passer un sal quart d’heure mec !',
+                        '"La peur s’empare de toi et tout le courage que tu avais jusqu’à lors à disparu. Confus et paniqué tu te mets à déblaterer toute l’histoire au gamin, priant pour qu’il te croit"',
+                        'Ah ah ah comment j’t’ai bien eu, oh là là tu verrais ta tronche mec !',
+                        'J’reconnais c’est Nko qui t’a joué un mauvais tour, j’avais tout de suite compris rassures toi, tu peux poser le crâne avec mes jouets, j’avais cassé le dernier ça tombe bien ! Merci',
+                        'Je m’appelle Neos et mon popa l’est parti acheter des clopes qu’il m’a dit. Mais t’en fais pas j’vais t’aider moi ! J’sais faire hein, pour de vrai quoi. T’façon ça tombe bien avant de partir popa a fait une base d’élixir, mais il nous manque un truc.',
+                        'Tu vas devoir parcourir les contrées les plus lointaines, traverser les mères et affronter l’armée des Cépanous, pour enfin demander audience auprès du gou…Attends tu m’écoutes là ?',
+                        'Bon ça va j’aurai essayé hein… En fait je sais pas du tout où ça se trouve mais tu vas devoir trouver du “sang de dragon albinos”. T’as plus qu’a chercher par toi même ! Moi j’suis trop petit pour partir avec des inconnus. Reviens me voir quand tu l’auras !',
+                    ]}
+                    onEnd={() => {
+                        dispatch(setQuestState(QUEST_STATES.STATE_2));
+                    }}
+                />
+            )}
+            {questState === QUEST_STATES.STATE_3 && (
+                <ComicsBubble
+                    style={{
+                        position: 'absolute',
+                        left: '70vh',
+                        bottom: '30vh',
+                        zIndex: 15,
+                        width: 400,
+                    }}
+                    content={[
+                        'Salut mec ! Alors t’as trouvé ? Wouha trop cool ! Par contre ça pue de ouf cet élixir, oh quoi que non en fait. T’as laché une caisse ou quoi ?!',
+                        'Vas-y verse tout dans l\'alambic et ça devrait fonctionner. Ou alors tu vas peut etre exploser, wouha ce sera drôle et dis ? Comment ça “non c’est pas drôle” ?',
+                    ]}
+                />
+            )}
+            {questState === QUEST_STATES.STATE_4 && (
+                <ComicsBubble
+                    style={{
+                        position: 'absolute',
+                        left: '70vh',
+                        bottom: '30vh',
+                        zIndex: 15,
+                        width: 400,
+                    }}
+                    content={[
+                        'Il reste une dernière chose à dire à voix haute, c’est une formule magique connue, mais popa y m’a pas dit c’est laquelle.',
+                    ]}
+                />
+            )}
+
+            {questState === QUEST_STATES.STATE_6 && (
+                <ComicsBubble
+                    style={{
+                        position: 'absolute',
+                        left: '70vh',
+                        bottom: '30vh',
+                        zIndex: 15,
+                        width: 400,
+                    }}
+                    content={[
+                        'Bravo ! Quand mon popa il va savoir que j’ai tout fais tout seul il va pas en rev.. ouais ouais bon ça va tu peux y aller, mec.',
+                    ]}
+                />
+            )}
             <NeosContainer>
                 <Neos />
             </NeosContainer>
 
-            <Row gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
-                marginTop: 30,
-                width: '100%',
-                height: '100%',
-            }}>
-                {questState === QUEST_STATES.STATE_1 && (
-                    <Button
-                        type={'primary'}
-                        onClick={() => {
-                            dispatch(setQuestState(QUEST_STATES.STATE_2));
-                        }}
-                    >
-                        Aller chercher la fiole
-                    </Button>
-                )}
-                {questState === QUEST_STATES.STATE_5 && (
-                    <Button
-                        type={'primary'}
-                        onClick={() => {
-                            dispatch(setQuestState(QUEST_STATES.STATE_6));
-                            dispatch(setShortEffect({
-                                sound: SOUNDS.POTION_DONE,
-                                volumeModifier: 0.2,
-                            }))
-                        }}
-                    >
-                        ABRACADABRA
-                    </Button>
-                )}
-            </Row>
+            {/*<Button
+                onClick={() => {
+                    dispatch(setQuestState(QUEST_STATES.STATE_6));
+                    dispatch(setShortEffect({
+                        sound: SOUNDS.POTION_DONE,
+                        volumeModifier: 0.2,
+                    }))
+                }}
+            >
+                test
+            </Button>*/}
         </Layout>
     )
 }
@@ -261,7 +333,7 @@ const NeosContainer = styled.div`
   }
 
   @media (max-height: 1366px) {
-    bottom: 2vh;
+    bottom: 0;
     left: 20vw;
     height: 35vh;
   }
@@ -277,4 +349,13 @@ const NeosContainer = styled.div`
     left: 19vw;
     height: 35vh;
   }
+`;
+
+const BlackScreen = styled.div`
+    position: absolute;
+    z-index: 16;
+    width: 100vw;
+    height: 105vh;
+    background-color: black;
+    opacity: 1;
 `;

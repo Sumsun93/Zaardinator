@@ -1,6 +1,6 @@
 import {EFFECT_TYPES, QUESTION_TYPES} from "../constants/questionTypes";
 import {Button, Slider, Typography} from "antd";
-import {useMemo} from "react";
+import React, {useMemo} from "react";
 
 type QuestionProps = {
     data: {
@@ -43,11 +43,11 @@ const Template = ({ data, children, value }: QuestionProps) => {
                     width: '100%',
                 }}
             >
-                {getFormattedTitle.map((text) => (
-                    <>
+                {getFormattedTitle.map((text, index) => (
+                    <React.Fragment key={index}>
                         {text}
                         {text !== getFormattedTitle[getFormattedTitle.length - 1] && <br/>}
-                    </>
+                    </React.Fragment>
                 ))}
             </Typography.Title>
 

@@ -33,14 +33,16 @@ const Home = () => {
 
     const handleStart = () => {
         // navigator.mediaDevices.getUserMedia({audio: true, video: false}) firefox
-        const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
+        /*const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
         permissions.then((stream) => {
-            dispatch(setInit(true))
-            dispatch(setSoundToPlay({sound: SOUNDS.FOREST}));
+
         })
         .catch((err) => {
             console.log(`${err.name} : ${err.message}`)
-        });
+        });*/
+
+        dispatch(setInit(true))
+        dispatch(setSoundToPlay({sound: SOUNDS.FOREST}));
     }
 
     return (

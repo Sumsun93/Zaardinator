@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import backgroundImage from '../assets/tavern/ZZ_QUIZ_TAVERNE_NUIT.webp';
 import QCM from "../components/QCM";
 import {useNavigate} from "react-router-dom";
-import {useCallback, useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import usePlayRandomSoundEffect from "../hooks/usePlayRandomSoundEffect";
@@ -14,6 +14,9 @@ const Tavern = () => {
     const playRandomSoundEffectTimeout = useRef<null | number>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [isStarted, setIsStarted] = useState(false);
+    const [isFinished, setIsFinished] = useState(false);
 
     const {playRandomSoundEffect} = usePlayRandomSoundEffect([
         SOUNDS.FART_LONG_1,
@@ -67,16 +70,21 @@ const Tavern = () => {
     return (
         <Layout
             bgImage={backgroundImage}
-            items={[
+            items={(isStarted && !isFinished) ? undefined : [
                 {
                     label: 'Sortir de la taverne',
                     onClick: goExtTavern,
                 }
             ]}
             locationName={'Taverne'}
-            isBgOpacity
+            isBgOpacity={isStarted}
         >
-            <QCM />
+            <QCM
+                isStarted={isStarted}
+                isFinished={isFinished}
+                setIsStarted={setIsStarted}
+                setIsFinished={setIsFinished}
+            />
         </Layout>
     )
 }

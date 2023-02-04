@@ -68,7 +68,7 @@ const CustomLayout = ({
                             style={{
                                 position: 'relative',
                                 padding: '20px',
-                                zIndex: 15,
+                                zIndex: 16,
                             }}
                         >
                             {locationName}

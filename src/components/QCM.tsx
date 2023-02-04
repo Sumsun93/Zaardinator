@@ -18,6 +18,7 @@ import QUEST_STATES from "../constants/questStates";
 import {setItemInventory, setQuestState, setShortEffect} from "../redux/features/game/gameSlice";
 import ITEMS from "../constants/items";
 import {SOUNDS} from "./SoundEffect";
+import ComicsBubble from "./ComicsBubble";
 
 const getRandomQuestionsData = () => {
     const randomQuestions: any[] = [];
@@ -31,16 +32,25 @@ const getRandomQuestionsData = () => {
     return randomQuestions;
 }
 
-const QCM = () => {
+const QCM = ({
+    isStarted,
+    isFinished,
+    setIsStarted,
+    setIsFinished,
+}: {
+    isStarted: boolean;
+    isFinished: boolean;
+    setIsStarted: (value: boolean) => void;
+    setIsFinished: (value: boolean) => void;
+}) => {
     const {questState} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
-
-    const [isStarted, setIsStarted] = useState(false);
-    const [isFinished, setIsFinished] = useState(false);
     const [randomQuestions, setRandomQuestions] = useState(getRandomQuestionsData());
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [values, setValues] = useState<any>([]);
     const [score, setScore] = useState(0);
+    const [drunkTalk, setDrunkTalk] = useState(false);
+    const [startTalk, setStartTalk] = useState(true);
 
     useEffect(() => {
         setValues(randomQuestions.map((data) => data.default))
@@ -137,19 +147,70 @@ const QCM = () => {
                     }))
                 }}
             />
-            <Barman
-                src={barman}
-                alt="barman"
-                onClick={() => {
-                    if (!isStarted) {
-                        setIsStarted(true);
-                    }
-                }}
-            />
-            <Alcoolique
-                src={alcoolique}
-                alt="alcoolique"
-            />
+            <BarmanContainer>
+                {!isStarted && startTalk && (
+                    <BubbleContainer doFade>
+                        <ComicsBubble
+                            right
+                            startDelay={2500}
+                            firstLayer
+                            style={{
+                                left: '-21vw',
+                                maxWidth: '25vw',
+                            }}
+                            content={[
+                                'B\'soir, bienvenue à la taverne des Trois Chaînes, Choumchoum pour t\'servir !',
+                                'T\'es prêt à répondre à mes questions ?',
+                            ]}
+                            onEnd={() => {
+                                if (!isStarted) {
+                                    setIsStarted(true);
+                                }
+                            }}
+                        />
+                    </BubbleContainer>
+                )}
+                <Barman
+                    src={barman}
+                    alt="barman"
+                />
+            </BarmanContainer>
+            <AlcooliqueContainer>
+                {!isStarted && drunkTalk && (
+                    <BubbleContainer>
+                        <ComicsBubble
+                            firstLayer
+                            style={{
+                                left: '20vw',
+                                bottom: '10vh',
+                                maxWidth: '25vw',
+                            }}
+                            content={[
+                                'Hep’s toi là ! Tu cherches un truc à faire ?',
+                                'Il y a une légende qui circule depuis des lustres dans les parages. T’as l’air vaillant, ça t’intéresse ?',
+                                'Assieds toi et prends une bière au comptoir Choumchoum se fera un plaisir de te la lustrer.',
+                                'Un château hanté surplombe la colline plus loin, personne n’ose s’y approcher. On y entend toutes sortes de bruits, d’explosions, de cris et de pleurs. Paraîtrait même qu’un fou y a élu domicile.',
+                                'Oh éh bois pas trop vite malheureux ! Bon sang mais c’est précieux enfin dis ! Tiens que j’va m’en prendre une aussi.',
+                                'Tu trouveras le château plus loin sur la droite de la taverne, débrouilles toi tout seul car personne ne t’aidera à partir de là. Oh et puis si on s’est jamais vu d’accord ?'
+                            ]}
+                            onEnd={() => {
+                                setStartTalk(true);
+                                setDrunkTalk(false);
+                            }}
+                        />
+                    </BubbleContainer>
+                )}
+                <Alcoolique
+                    src={alcoolique}
+                    alt="alcoolique"
+                    onClick={() => {
+                        if (questState === QUEST_STATES.NOT_STARTED) {
+                            setDrunkTalk(true);
+                            setStartTalk(false);
+                        }
+                    }}
+                />
+            </AlcooliqueContainer>
             {isSumsunVisible && (
                 <SumsunContainer>
                     <SumsunCage
@@ -159,7 +220,7 @@ const QCM = () => {
                 </SumsunContainer>
             )}
             {!isFinished && isStarted && (
-                <Col span={24} style={{ display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+                <Col span={24} style={{ display: 'flex', justifyContent: 'center', zIndex: 15 }}>
                     <Content>
                         {/* @ts-ignore */}
                         <Question data={randomQuestions[currentQuestion]} value={values[currentQuestion]} setValue={handleSetValues} />
@@ -185,7 +246,7 @@ const QCM = () => {
                 </Col>
             )}
             {isFinished && (
-                <Col span={24} style={{ display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+                <Col span={24} style={{ display: 'flex', justifyContent: 'center', zIndex: 15 }}>
                     <div
                         style={{
                             display: 'flex',
@@ -356,10 +417,30 @@ const Pancarte = styled.img`
     bottom: 5vh;
     right: 7vh;
     height: 20vh;
-    z-index: 10;
+    z-index: 11;
     transform: translateX(200%);
     animation: ${slideFromRight} 1s ease-in-out 0.5s;
     animation-fill-mode: forwards;
+    cursor: pointer;
+`;
+
+const BarmanContainer = styled.div`
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 75vh;
+    z-index: 10;
+`;
+
+const BubbleContainer = styled.div`
+    position: relative;
+    z-index: 100;
+  
+    ${({ doFade }: { doFade?: boolean }) => doFade && css`
+        opacity: 0;
+        animation: ${fadeIn} 1s ease-in-out 2.5s;
+        animation-fill-mode: forwards;
+    `}
 `;
 
 const Barman = styled.img`
@@ -371,12 +452,15 @@ const Barman = styled.img`
     transform: translateX(100%);
     animation: ${slideFromRight} 1s ease-in-out 1.5s;
     animation-fill-mode: forwards;
-    cursor: pointer;
     transition: .2s;
-  
-    &:hover {
-      filter: drop-shadow(0 0 0.5rem #FFD700);
-    }
+`;
+
+const AlcooliqueContainer = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50vh;
+    z-index: 0;
 `;
 
 const Alcoolique = styled.img`
