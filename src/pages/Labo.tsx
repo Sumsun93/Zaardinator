@@ -8,7 +8,6 @@ import table1 from '../assets/labo/ZZ_QUIZ_TABLE_1.svg';
 import table2 from '../assets/labo/ZZ_QUIZ_TABLE_2.svg';
 import table3 from '../assets/labo/ZZ_QUIZ_TABLE_3.svg';
 import table4 from '../assets/labo/ZZ_QUIZ_TABLE_4.svg';
-import neos from '../assets/labo/ZZ_QUIZ_NEOS.svg';
 import {useNavigate} from "react-router-dom";
 import {RootState} from "../redux/store";
 import QUEST_STATES from "../constants/questStates";
@@ -24,7 +23,7 @@ import ITEMS from "../constants/items";
 import {useEffect, useMemo} from "react";
 import {SOUNDS} from "../components/SoundEffect";
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
-
+import Neos from "../components/Characters/Neos/Neos";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
@@ -36,7 +35,6 @@ const Labo = () => {
         startListening,
         stopListening,
     } = useSpeechRecognition();
-
 
     const goDonjon = () => {
         navigate('/castle-donjon');
@@ -152,10 +150,11 @@ const Labo = () => {
                     isBlinking={questState === QUEST_STATES.STATE_6}
                 />
             </DropContainer>
-            <Neos
-                src={neos}
-                alt={'Neos'}
-            />
+
+            <NeosContainer>
+                <Neos />
+            </NeosContainer>
+
             <Row gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
                 marginTop: 30,
                 width: '100%',
@@ -246,36 +245,36 @@ const Table = styled.img`
     
 `;
 
-const Neos = styled.img`
-    position: absolute;
-  
-    @media (max-height: 2160px) {
-        bottom: 3vh;
-        left: 16vw;
-        height: 40vh;
-    }
-  
-    @media (max-height: 1440px) {
-        bottom: 5vh;
-        left: 20vw;
-        height: 35vh;
-    }
-  
-    @media (max-height: 1366px) {
-        bottom: 2vh;
-        left: 20vw;
-        height: 35vh;
-    }
-  
-    @media (max-height: 1200px) {
-        bottom: -1vh;
-        left: 20vw;
-        height: 38vh;
-    }
-  
-    @media (max-height: 1080px) {
-        bottom: 5vh;
-        left: 19vw;
-        height: 35vh;
-    }
+const NeosContainer = styled.div`
+  position: absolute;
+
+  @media (max-height: 2160px) {
+    bottom: 3vh;
+    left: 16vw;
+    height: 40vh;
+  }
+
+  @media (max-height: 1440px) {
+    bottom: 5vh;
+    left: 20vw;
+    height: 35vh;
+  }
+
+  @media (max-height: 1366px) {
+    bottom: 2vh;
+    left: 20vw;
+    height: 35vh;
+  }
+
+  @media (max-height: 1200px) {
+    bottom: -1vh;
+    left: 20vw;
+    height: 38vh;
+  }
+
+  @media (max-height: 1080px) {
+    bottom: 5vh;
+    left: 19vw;
+    height: 35vh;
+  }
 `;
