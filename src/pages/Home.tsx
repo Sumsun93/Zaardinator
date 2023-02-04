@@ -104,8 +104,7 @@ const Home = () => {
                 alt="tombe"
                 onClick={() => {
                     dispatch(setShortEffect({
-                        sound: SOUNDS.BYE_COLBY,
-                        volumeModifier: 2,
+                        sound: SOUNDS.BYE_COLBY
                     }))
                 }}
             />
