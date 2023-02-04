@@ -346,7 +346,7 @@ const Comptoir = styled.img`
     bottom: 0;
     right: -70vh;
     height: 52vh;
-    z-index: 10;
+    z-index: 11;
     animation: ${slideFromRight} 1s ease-in-out;
     pointer-events: none;
 `;
@@ -367,7 +367,7 @@ const Barman = styled.img`
     bottom: 0;
     right: 0;
     height: 75vh;
-    z-index: 9;
+    z-index: 10;
     transform: translateX(100%);
     animation: ${slideFromRight} 1s ease-in-out 1.5s;
     animation-fill-mode: forwards;

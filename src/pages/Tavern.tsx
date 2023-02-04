@@ -74,6 +74,7 @@ const Tavern = () => {
                 }
             ]}
             locationName={'Taverne'}
+            isBgOpacity
         >
             <QCM />
         </Layout>

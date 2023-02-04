@@ -22,11 +22,11 @@ export interface GameState {
 const initialState: GameState = {
     isInit: false,
     bgPosition: 0,
-    questState: QUEST_STATES.NOT_STARTED,
-    itemInventory: ITEMS.NONE,
+    questState: localStorage.getItem('questPrincess') ? localStorage.getItem('questPrincess') as QUEST_STATES : QUEST_STATES.NOT_STARTED,
+    itemInventory: localStorage.getItem('itemInventory') ? localStorage.getItem('itemInventory') as ITEMS : ITEMS.NONE,
     settings: {
         openEscapeMenu: false,
-        volume: 0.5
+        volume: localStorage.getItem('volume') ? parseFloat(localStorage.getItem('volume') as string) : 0.5,
     },
     soundToPlay: SOUNDS.NONE,
     soundVolumeModifier: 1,
@@ -39,10 +39,6 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         setInit: (state, action: PayloadAction<boolean>) => {
-            if (action.payload) {
-                state.questState = localStorage.getItem('questPrincess') as QUEST_STATES || QUEST_STATES.NOT_STARTED
-            }
-
             state.isInit = action.payload
         },
         addBgPositionValue: (state, action: PayloadAction<number>) => {
@@ -58,6 +54,7 @@ export const gameSlice = createSlice({
         },
         setQuestState: (state, action: PayloadAction<QUEST_STATES>) => {
             state.questState = action.payload
+            localStorage.setItem('questPrincess', action.payload)
         },
         validQuestDrop: (state, action: PayloadAction<{
             neededState: QUEST_STATES,
@@ -71,9 +68,12 @@ export const gameSlice = createSlice({
 
             state.questState = action.payload.questState
             state.itemInventory = action.payload.itemInventory
+            localStorage.setItem('questPrincess', action.payload.questState)
+            localStorage.setItem('itemInventory', action.payload.itemInventory)
         },
         setItemInventory: (state, action: PayloadAction<ITEMS>) => {
             state.itemInventory = action.payload
+            localStorage.setItem('itemInventory', action.payload)
         },
         setSettings: (state, action: PayloadAction<{
             openEscapeMenu?: boolean,
@@ -84,6 +84,7 @@ export const gameSlice = createSlice({
             }
             if (action.payload.volume !== undefined) {
                 state.settings.volume = action.payload.volume
+                localStorage.setItem('volume', action.payload.volume.toString())
             }
         },
         setSoundToPlay: (state, action: PayloadAction<{

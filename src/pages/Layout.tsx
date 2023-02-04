@@ -12,7 +12,7 @@ const CustomLayout = ({
     bgImage,
     items,
     locationName,
-    bgCenter = true,
+    isBgOpacity = false,
 }: {
     children?: React.ReactNode,
     bgImage?: string,
@@ -23,7 +23,7 @@ const CustomLayout = ({
         onMouseLeave?: () => void,
     }[],
     locationName?: string,
-    bgCenter?: boolean,
+    isBgOpacity?: boolean,
 }) => {
     const {bgPosition, questState} = useSelector((state: any) => state.game);
 
@@ -40,6 +40,9 @@ const CustomLayout = ({
                 overflow: 'hidden',
             }}
         >
+            {isBgOpacity && (
+                <BgColor />
+            )}
             <Layout.Header style={{
                 width: '100%',
                 height: 0,
@@ -65,7 +68,7 @@ const CustomLayout = ({
                             style={{
                                 position: 'relative',
                                 padding: '20px',
-                                zIndex: 10,
+                                zIndex: 15,
                             }}
                         >
                             {locationName}
@@ -97,7 +100,7 @@ const CustomLayout = ({
                 backgroundColor: 'transparent',
                 boxShadow: 'none',
                 padding: 0,
-                zIndex: 10,
+                zIndex: 15,
             }}>
                 {items && <MoveBar items={items} />}
                 {questState !== QUEST_STATES.NOT_STARTED && questState !== QUEST_STATES.DONE && <Inventory />}
@@ -116,7 +119,7 @@ const BgColor = styled.div`
     width: 100%;
     background-color: #000000;
     opacity: 0.7;
-    z-index: 5;
+    z-index: 10;
 `;
 
 const BgLocation = styled.img`
@@ -125,5 +128,5 @@ const BgLocation = styled.img`
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 5;
+    z-index: 15;
 `;

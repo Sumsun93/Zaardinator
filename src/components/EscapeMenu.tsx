@@ -39,7 +39,7 @@ const EscapeMenu = () => {
                         position: 'absolute',
                         top: 10,
                         left: 10,
-                        zIndex: 10,
+                        zIndex: 20,
                         backgroundColor: 'rgba(0, 0, 0, 0.9)',
                         color: 'white',
                         display: 'flex',
@@ -47,6 +47,8 @@ const EscapeMenu = () => {
                         justifyContent: 'center',
                         boxShadow: 'none',
                         fontSize: '2em',
+                        border: 'none',
+                        outline: 'none',
                     }}
                     onClick={handleOpenEscapeMenu}
                     icon={<AiOutlineSetting />}
@@ -77,6 +79,7 @@ const EscapeMenu = () => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 20,
+                            border: '1px solid white',
                         }}
                         onClick={(e) => {
                             e.stopPropagation();
