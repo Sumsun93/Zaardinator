@@ -131,6 +131,7 @@ const Container = styled.div`
     justify-content: flex-end;
     align-items: flex-start;
     z-index: 5;
+    pointer-events: none;
 `
 
 const ComicsBubbleContainer = styled.div`

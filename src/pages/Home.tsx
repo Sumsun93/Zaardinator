@@ -1,4 +1,4 @@
-import {Button, Col, Row} from "antd";
+import {Button, Col, Row, Typography} from "antd";
 import styled from "styled-components";
 // import barman from "../assets/ZZ_QUIZ_Barman.svg";
 import {useDispatch, useSelector} from "react-redux";
@@ -31,6 +31,20 @@ const Home = () => {
         navigate('/ext-castle')
     }
 
+    const handleStart = () => {
+        // navigator.mediaDevices.getUserMedia({audio: true, video: false}) firefox
+        /*const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
+        permissions.then((stream) => {
+
+        })
+        .catch((err) => {
+            console.log(`${err.name} : ${err.message}`)
+        });*/
+
+        dispatch(setInit(true))
+        dispatch(setSoundToPlay({sound: SOUNDS.FOREST}));
+    }
+
     return (
         <Layout
             bgImage={backgroundImage}
@@ -55,6 +69,7 @@ const Home = () => {
                         width: '100%',
                         height: '100%',
                         display: 'flex',
+                        flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor: 'rgba(0, 0, 0, 0.9)',
@@ -62,10 +77,7 @@ const Home = () => {
                     }}
                 >
                     <Button
-                        onClick={() => {
-                            dispatch(setInit(true))
-                            dispatch(setSoundToPlay({sound: SOUNDS.FOREST}));
-                        }}
+                        onClick={handleStart}
                         size={'large'}
                         style={{
                             width: 200,
@@ -75,6 +87,18 @@ const Home = () => {
                     >
                         Jouer
                     </Button>
+                    <Typography.Paragraph
+                        style={{
+                            marginTop: 20,
+                            textAlign: 'center',
+                        }}
+                    >
+                        En cliquant sur "Jouer", vous acceptez l'utilisation du microphone pour la reconnaissance vocale.
+                        <br />
+                        Votre microphone ne sera pas utilisé pour autre chose que la reconnaissance vocale (seulement quand elle sera nécessaire) et ne sera pas enregistré.
+                        <br/>
+                        En cas de refus, vous ne pourrez pas jouer.
+                    </Typography.Paragraph>
                 </div>
             )}
             <Tombe
@@ -82,8 +106,7 @@ const Home = () => {
                 alt="tombe"
                 onClick={() => {
                     dispatch(setShortEffect({
-                        sound: SOUNDS.BYE_COLBY,
-                        volumeModifier: 2,
+                        sound: SOUNDS.BYE_COLBY
                     }))
                 }}
             />
