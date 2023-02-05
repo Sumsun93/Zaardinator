@@ -4,7 +4,6 @@ import {DATA} from '../constants/data';
 import Question from "./Question";
 import styled, {css, keyframes} from "styled-components";
 import comptoir from '../assets/tavern/ZZ_QUIZ_comptoir.svg';
-import alcoolique from '../assets/tavern/ZZ_QUIZ_alcoolique.svg';
 import sumsunCage from '../assets/ZZ_QUIZ_Sumsunn.svg';
 import pancarte from "../assets/tavern/ZZ_QUIZ_Pancarte.svg";
 import {EFFECT_TYPES} from "../constants/questionTypes";
@@ -17,7 +16,6 @@ import QUEST_STATES from "../constants/questStates";
 import {setItemInventory, setQuestState, setShortEffect} from "../redux/features/game/gameSlice";
 import ITEMS from "../constants/items";
 import {SOUNDS} from "./SoundEffect";
-import ComicsBubble from "./ComicsBubble";
 import NPC from "./NPCs/NPC";
 import {SlideFromRight} from "./transitions/transitions";
 import {CHARACTER_ID} from "../constants/character";
@@ -173,41 +171,9 @@ const QCM = ({
             </BarmanContainer>
 
             <AlcooliqueContainer>
-                {!isStarted && drunkTalk && (
-                    <BubbleContainer>
-                        <ComicsBubble
-                            firstLayer
-                            style={{
-                                left: '20vw',
-                                bottom: '10vh',
-                                maxWidth: '25vw',
-                            }}
-                            content={[
-                                'Hep’s toi là ! Tu cherches un truc à faire ?',
-                                'Il y a une légende qui circule depuis des lustres dans les parages. T’as l’air vaillant, ça t’intéresse ?',
-                                'Assieds toi et prends une bière au comptoir Choumchoum se fera un plaisir de te la lustrer.',
-                                'Un château hanté surplombe la colline plus loin, personne n’ose s’y approcher. On y entend toutes sortes de bruits, d’explosions, de cris et de pleurs. Paraîtrait même qu’un fou y a élu domicile.',
-                                'Oh éh bois pas trop vite malheureux ! Bon sang mais c’est précieux enfin dis ! Tiens que j’va m’en prendre une aussi.',
-                                'Tu trouveras le château plus loin sur la droite de la taverne, débrouilles toi tout seul car personne ne t’aidera à partir de là. Oh et puis si on s’est jamais vu d’accord ?'
-                            ]}
-                            onEnd={() => {
-                                setStartTalk(true);
-                                setDrunkTalk(false);
-                            }}
-                        />
-                    </BubbleContainer>
-                )}
-                <Alcoolique
-                    src={alcoolique}
-                    alt="alcoolique"
-                    onClick={() => {
-                        if (questState === QUEST_STATES.NOT_STARTED) {
-                            setDrunkTalk(true);
-                            setStartTalk(false);
-                        }
-                    }}
-                />
+                <NPC characterId={CHARACTER_ID.BENJAM} />
             </AlcooliqueContainer>
+
             {isSumsunVisible && (
                 <SumsunContainer>
                     <SumsunCage
@@ -216,6 +182,7 @@ const QCM = ({
                     />
                 </SumsunContainer>
             )}
+
             {!isFinished && isStarted && (
                 <Col span={24} style={{display: 'flex', justifyContent: 'center', zIndex: 15}}>
                     <Content>

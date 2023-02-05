@@ -146,6 +146,7 @@ const Bubble = styled.div`
                     transition: all 0.3s ease;
                     box-sizing: border-box;
                     ${right ? 'right' : 'left'}: 10px;
+                    bottom: -5.5px;
                 }
     
                 &::after {

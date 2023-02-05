@@ -10,14 +10,11 @@ const fadeIn = keyframes`
 `;
 
 export const FadeIn = styled.div`
-    position: relative;
-    z-index: 100;
-  
-    ${({ doFade }: { doFade?: boolean }) => doFade && css`
-        opacity: 0;
-        animation: ${fadeIn} 1s ease-in-out 2.5s;
-        animation-fill-mode: forwards;
-    `}
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+  animation: ${fadeIn} .2s ease-in-out;
+  animation-fill-mode: forwards;
 `;
 
 const slideFromRight = keyframes`

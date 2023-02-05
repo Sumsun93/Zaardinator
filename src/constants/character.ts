@@ -1,4 +1,5 @@
 import barman from "../assets/tavern/ZZ_QUIZ_Barman.svg";
+import alcoolique from "../assets/tavern/ZZ_QUIZ_alcoolique.svg";
 
 export enum CHARACTER_ID {
     PLAYER = 'character_player',
@@ -21,6 +22,6 @@ export const CHARACTER_ASSETS = {
     [CHARACTER_ID.MAGICIAN]: undefined,
     [CHARACTER_ID.DUNGEON_KEEPER]: undefined,
     [CHARACTER_ID.NARRATOR]: undefined,
-    [CHARACTER_ID.BENJAM]: undefined,
+    [CHARACTER_ID.BENJAM]: alcoolique,
     [CHARACTER_ID.CHOUMCHOUM]: barman,
 }

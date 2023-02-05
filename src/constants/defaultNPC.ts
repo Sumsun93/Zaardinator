@@ -15,4 +15,18 @@ export const DEFAULT_NPC_PROPERTIES = {
         },
         quests: [],
     },
+    [CHARACTER_ID.BENJAM]: {
+        id: CHARACTER_ID.BENJAM,
+        type: CHARACTER_TYPE.NPC,
+        name: 'Benjam',
+        level: 1,
+        health: Number.POSITIVE_INFINITY,
+        armor: Number.POSITIVE_INFINITY,
+        inventory: {
+            slots: 1,
+            items: [],
+            money: null,
+        },
+        quests: [],
+    },
 }

@@ -7,6 +7,7 @@ import {FadeIn} from "../transitions/transitions";
 import {getCloseDialogEventName} from "../../utils/events";
 import useEvent from "../../hooks/useEvent";
 import {DEFAULT_NPC_PROPERTIES} from "../../constants/defaultNPC";
+import {getCharacterBubblePosition} from "../../utils/bubble";
 
 export interface NPCProps {
     characterId: CHARACTER_ID;
@@ -60,7 +61,7 @@ const NPC: React.FC<NPCProps> = ({characterId}) => {
     return (
         <div>
             {npc && npc.defaultDialog && showDialog && (
-                <BubbleContainer>
+                <BubbleContainer style={getCharacterBubblePosition(characterId)}>
                     <FadeIn>
                         <ComicsBubble
                             right
@@ -88,6 +89,4 @@ export default NPC;
 const BubbleContainer = styled.div`
   position: absolute;
   z-index: 100;
-  top: -11%;
-  left: -21%;
 `;
