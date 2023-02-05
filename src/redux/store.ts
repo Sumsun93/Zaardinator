@@ -1,9 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import gameReducer from './features/game/gameSlice';
+import gameboardReducer from './features/gameboard/gameboardSlice';
+import playerReducer from "./features/player/playerSlice";
+import npcsReducer from "./features/npcs/npcsSlice";
 
 export const store = configureStore({
     reducer: {
         game: gameReducer,
+        gameboard: gameboardReducer,
+        player: playerReducer,
+        npcs: npcsReducer,
     },
 })
 

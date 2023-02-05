@@ -4,16 +4,18 @@ import {Item} from "./item";
 
 export interface DialogOption {
     text: string;
-    nextDialogId: DIALOG_ID;
-    onClick?: (nextDialogId: DIALOG_ID) => void;
+    nextDialogId?: string;
+    onClick?: (nextDialogId: string) => void;
     requirements?: {
         items?: Item[];
     };
 }
 
 export interface Dialog {
-    id: DIALOG_ID;
+    id: string;
     characterId: CHARACTER_ID;
-    text: string;
+    isNarrator?: boolean;
+    autoPlay?: boolean;
+    text: string[];
     options: DialogOption[];
 }

@@ -1,10 +1,10 @@
 import {Quest} from "./quest";
 import {NPC, Player} from "./character";
+import {MAP} from "../constants/map";
 
 export interface GameBoard {
     quests: Quest[];
-    player: Player;
-    NPCs: NPC[];
+    currentMap: MAP;
 }
 
 /**

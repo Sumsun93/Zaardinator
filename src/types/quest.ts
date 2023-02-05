@@ -4,7 +4,7 @@ import {DIALOG_ID} from "../constants/dialog";
 
 export interface QuestStep {
     dialogs: Dialog[];
-    currentDialogId: DIALOG_ID;
+    currentDialogId: string;
 }
 
 export interface Quest {
@@ -21,6 +21,6 @@ export interface ActiveQuest {
     questId: QUEST_ID;
     currentStep: {
         stepIndex: number;
-        dialogId: DIALOG_ID;
+        dialogId: string;
     };
 }
