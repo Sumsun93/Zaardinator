@@ -16,7 +16,7 @@ import {useEffect} from "react";
 import {SOUNDS} from "../components/SoundEffect";
 import ComicsBubble from "../components/ComicsBubble";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP} from "../constants/map";
+import {MAP, MAP_NAME} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Bedroom = () => {
@@ -25,7 +25,7 @@ const Bedroom = () => {
     const {moveToMap} = useGameBoard();
 
     const goCastle = () => {
-        moveToMap(MAP.CASTLE.HALL);
+        moveToMap(MAP_NAME.CASTLE.HALL);
     }
 
     useEffect(() => {

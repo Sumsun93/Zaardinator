@@ -13,7 +13,7 @@ import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import ComicsBubble from "../components/ComicsBubble";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP} from "../constants/map";
+import {MAP, MAP_NAME} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Donjon = () => {
@@ -29,11 +29,11 @@ const Donjon = () => {
     }, []);
 
     const goCastle = () => {
-        moveToMap(MAP.CASTLE.HALL);
+        moveToMap(MAP_NAME.CASTLE.HALL);
     }
 
     const goLabo = () => {
-        moveToMap(MAP.CASTLE.LABO);
+        moveToMap(MAP_NAME.CASTLE.LABO);
     }
 
     const isVisitingLabo = useMemo(() => questState !== QUEST_STATES.NOT_STARTED, [questState]);

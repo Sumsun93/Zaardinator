@@ -26,7 +26,7 @@ import useSpeechRecognition from "../hooks/useSpeechRecognition";
 import Neos from "../components/Characters/Neos/Neos";
 import ComicsBubble from "../components/ComicsBubble";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP} from "../constants/map";
+import {MAP, MAP_NAME} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
@@ -42,7 +42,7 @@ const Labo = () => {
     const [isBlackScreen, setIsBackScreen] = useState(true);
 
     const goDonjon = () => {
-        moveToMap(MAP.CASTLE.DONJON);
+        moveToMap(MAP_NAME.CASTLE.DONJON);
     }
 
     useEffect(() => {

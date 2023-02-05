@@ -2,14 +2,13 @@ import {useDispatch} from "react-redux";
 import Layout from "./Layout";
 import backgroundImage from '../assets/tavern/ZZ_QUIZ_TAVERNE_NUIT.webp';
 import QCM from "../components/QCM";
-import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import usePlayRandomSoundEffect from "../hooks/usePlayRandomSoundEffect";
 import {getRandomInterval} from "../utils/random";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP} from "../constants/map";
+import {MAP_NAME} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Tavern = () => {
@@ -66,7 +65,7 @@ const Tavern = () => {
     }, []);
 
     const goExtTavern = () => {
-        moveToMap(MAP.FOREST.TAVERNE);
+        moveToMap(MAP_NAME.FOREST.TAVERNE);
     }
 
     return (

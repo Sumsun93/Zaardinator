@@ -1,11 +1,10 @@
 import {CHARACTER_ID} from "../constants/character";
-import {DIALOG_ID} from "../constants/dialog";
 import {Item} from "./item";
 
 export interface DialogOption {
     text: string;
     nextDialogId?: string;
-    onClick?: (nextDialogId: string) => void;
+    onClick?: (nextDialogId?: string) => void;
     requirements?: {
         items?: Item[];
     };

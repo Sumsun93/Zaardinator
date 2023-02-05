@@ -3,6 +3,7 @@ import {CHARACTER_ID, CHARACTER_TYPE} from "../constants/character";
 import {ActiveQuest} from "./quest";
 import {CharacterInventory} from "./inventory";
 import {DealerItem} from "./item";
+import {Dialog} from "./dialog";
 
 export interface Character {
     id: CHARACTER_ID;
@@ -21,7 +22,7 @@ export interface Player extends Character {
 
 export interface NPC extends Character {
     quests: QUEST_ID[];
-    defaultDialog: string;
+    defaultDialog?: Dialog;
 }
 
 export interface NPCDealer extends NPC {

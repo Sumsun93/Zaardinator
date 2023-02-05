@@ -1,9 +1,8 @@
 import {Quest} from "./quest";
-import {Map} from "./map";
 
 export interface GameBoard {
     quests: Quest[];
-    currentMap: Map;
+    currentMap: string;
 }
 
 /**

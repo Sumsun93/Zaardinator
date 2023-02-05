@@ -6,7 +6,7 @@ import Layout from "./Layout";
 import backgroundImage from '../assets/extCastle/ZZ_QUIZ_CHATEAU.webp'
 import {useNavigate} from "react-router-dom";
 import {SOUNDS} from "../components/SoundEffect";
-import {MAP} from "../constants/map";
+import {MAP, MAP_NAME} from "../constants/map";
 import useGameBoard from "../hooks/useGameBoard";
 
 const ExtCastle = () => {
@@ -21,11 +21,11 @@ const ExtCastle = () => {
 
 
     const goTavern = () => {
-        moveToMap(MAP.FOREST.TAVERNE);
+        moveToMap(MAP_NAME.FOREST.TAVERNE);
     }
 
     const goCastle = () => {
-        moveToMap(MAP.CASTLE.HALL);
+        moveToMap(MAP_NAME.CASTLE.HALL);
     }
 
     return (

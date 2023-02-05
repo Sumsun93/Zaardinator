@@ -6,39 +6,28 @@ import Bedroom from "../pages/Bedroom";
 import Donjon from "../pages/Donjon";
 import Labo from "../pages/Labo";
 
-export const MAP = {
+export const MAP_NAME = {
     TAVERNE: {
-        BAR: {
-            name: 'taverne-bar',
-            View: Tavern,
-        },
+        BAR: 'taverne-bar',
     },
     FOREST: {
-        CASTLE: {
-            name: 'forest-castle',
-            View: ExtCastle,
-        },
-        TAVERNE: {
-            name: 'forest-taverne',
-            View: Home,
-        },
+        CASTLE: 'forest-castle',
+        TAVERNE: 'forest-taverne',
     },
     CASTLE: {
-        HALL: {
-            name: 'castle-hall',
-            View: Castle,
-        },
-        BEDROOM: {
-            name: 'castle-bedroom',
-            View: Bedroom,
-        },
-        DONJON: {
-            name: 'castle-donjon',
-            View: Donjon,
-        },
-        LABO: {
-            name: 'castle-labo',
-            View: Labo,
-        },
+        HALL: 'castle-hall',
+        BEDROOM: 'castle-bedroom',
+        DONJON: 'castle-donjon',
+        LABO: 'castle-labo',
     }
 }
+
+export const MAP = {
+    [MAP_NAME.TAVERNE.BAR]: Tavern,
+    [MAP_NAME.FOREST.CASTLE]: ExtCastle,
+    [MAP_NAME.FOREST.TAVERNE]: Home,
+    [MAP_NAME.CASTLE.HALL]: Castle,
+    [MAP_NAME.CASTLE.BEDROOM]: Bedroom,
+    [MAP_NAME.CASTLE.DONJON]: Donjon,
+    [MAP_NAME.CASTLE.LABO]: Labo,
+};
