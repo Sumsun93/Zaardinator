@@ -11,7 +11,7 @@ export const getCharacterBubblePosition = (characterId: string) => {
         case CHARACTER_ID.BENJAM:
             return {
                 top: '-30%',
-                left: '5%',
+                right: '17%',
             }
     }
 };

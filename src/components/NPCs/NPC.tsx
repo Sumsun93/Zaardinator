@@ -11,9 +11,10 @@ import {getCharacterBubblePosition} from "../../utils/bubble";
 
 export interface NPCProps {
     characterId: CHARACTER_ID;
+    bubblePosition?: 'left' | 'right';
 }
 
-const NPC: React.FC<NPCProps> = ({characterId}) => {
+const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right'}) => {
     const {npc, create} = useNPC(characterId);
 
     const [showDialog, setShowDialog] = useState(false);
@@ -64,7 +65,7 @@ const NPC: React.FC<NPCProps> = ({characterId}) => {
                 <BubbleContainer style={getCharacterBubblePosition(characterId)}>
                     <FadeIn>
                         <ComicsBubble
-                            right
+                            right={bubblePosition === 'right'}
                             firstLayer
                             style={{
                                 width: '25vw',

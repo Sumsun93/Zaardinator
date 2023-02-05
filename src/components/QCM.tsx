@@ -171,7 +171,7 @@ const QCM = ({
             </BarmanContainer>
 
             <AlcooliqueContainer>
-                <NPC characterId={CHARACTER_ID.BENJAM} />
+                <NPC characterId={CHARACTER_ID.BENJAM} bubblePosition={"left"} />
             </AlcooliqueContainer>
 
             {isSumsunVisible && (
@@ -433,7 +433,7 @@ const Barman = styled.img`
 const AlcooliqueContainer = styled.div`
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: -11vw;
   height: 50vh;
   z-index: 0;
 `;
