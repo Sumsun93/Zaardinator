@@ -6,10 +6,12 @@ import Layout from "./Layout";
 import backgroundImage from '../assets/castle/ZZ_QUIZ_CHATEAU_ENTREE_LARGE.webp'
 import {useNavigate} from "react-router-dom";
 import {SOUNDS} from "../components/SoundEffect";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 const Castle = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     const intervalBg = useRef<number|null>(null);
 
@@ -26,15 +28,15 @@ const Castle = () => {
     }, []);
 
     const goBedroom = () => {
-        navigate('/castle-bedroom');
+        moveToMap(MAP.CASTLE.BEDROOM);
     }
 
     const goDonjon = () => {
-        navigate('/castle-donjon');
+        moveToMap(MAP.CASTLE.DONJON);
     }
 
     const goExtCastle = () => {
-        navigate('/ext-castle');
+        moveToMap(MAP.FOREST.CASTLE);
     }
 
     const onMouseEnter = (value: number) => () => {

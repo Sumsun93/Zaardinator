@@ -15,15 +15,17 @@ import DropContainer from "../components/DropContainer";
 import {useEffect} from "react";
 import {SOUNDS} from "../components/SoundEffect";
 import ComicsBubble from "../components/ComicsBubble";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Bedroom = () => {
     const {questState} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     const goCastle = () => {
-        navigate('/castle');
+        moveToMap(MAP.CASTLE.HALL);
     }
 
     useEffect(() => {

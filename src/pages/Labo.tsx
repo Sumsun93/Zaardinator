@@ -25,12 +25,14 @@ import {SOUNDS} from "../components/SoundEffect";
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
 import Neos from "../components/Characters/Neos/Neos";
 import ComicsBubble from "../components/ComicsBubble";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
     const {questState, itemInventory} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
     const {
         transcript,
         startListening,
@@ -40,7 +42,7 @@ const Labo = () => {
     const [isBlackScreen, setIsBackScreen] = useState(true);
 
     const goDonjon = () => {
-        navigate('/castle-donjon');
+        moveToMap(MAP.CASTLE.DONJON);
     }
 
     useEffect(() => {

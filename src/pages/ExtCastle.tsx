@@ -6,10 +6,12 @@ import Layout from "./Layout";
 import backgroundImage from '../assets/extCastle/ZZ_QUIZ_CHATEAU.webp'
 import {useNavigate} from "react-router-dom";
 import {SOUNDS} from "../components/SoundEffect";
+import {MAP} from "../constants/map";
+import useGameBoard from "../hooks/useGameBoard";
 
 const ExtCastle = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     useEffect(() => {
         dispatch(setSoundToPlay({
@@ -19,11 +21,11 @@ const ExtCastle = () => {
 
 
     const goTavern = () => {
-        navigate('/');
+        moveToMap(MAP.FOREST.TAVERNE);
     }
 
     const goCastle = () => {
-        navigate('/castle');
+        moveToMap(MAP.CASTLE.HALL);
     }
 
     return (

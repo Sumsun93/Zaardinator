@@ -8,12 +8,14 @@ import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import usePlayRandomSoundEffect from "../hooks/usePlayRandomSoundEffect";
 import {getRandomInterval} from "../utils/random";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Tavern = () => {
     const playRandomSoundEffectTimeout = useRef<null | number>(null);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     const [isStarted, setIsStarted] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
@@ -64,7 +66,7 @@ const Tavern = () => {
     }, []);
 
     const goExtTavern = () => {
-        navigate('/');
+        moveToMap(MAP.FOREST.TAVERNE);
     }
 
     return (

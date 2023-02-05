@@ -12,12 +12,14 @@ import QUEST_STATES from "../constants/questStates";
 import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import ComicsBubble from "../components/ComicsBubble";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Donjon = () => {
     const {questState} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     useEffect(() => {
         dispatch(setSoundToPlay({
@@ -27,11 +29,11 @@ const Donjon = () => {
     }, []);
 
     const goCastle = () => {
-        navigate('/castle');
+        moveToMap(MAP.CASTLE.HALL);
     }
 
     const goLabo = () => {
-        navigate('/castle-labo');
+        moveToMap(MAP.CASTLE.LABO);
     }
 
     const isVisitingLabo = useMemo(() => questState !== QUEST_STATES.NOT_STARTED, [questState]);

@@ -11,11 +11,13 @@ import backgroundImage from '../assets/extTavern/ZZ_QUIZ_TAVERNE_EXTERIEUR.webp'
 import tombe from '../assets/extTavern/ZZ_QUIZ_Tombe.svg';
 import {RootState} from "../redux/store";
 import {SOUNDS} from "../components/SoundEffect";
+import useGameBoard from "../hooks/useGameBoard";
+import {MAP} from "../constants/map";
 
 const Home = () => {
     const {isInit} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {moveToMap} = useGameBoard();
 
     useEffect(() => {
         if (isInit) {
@@ -24,11 +26,11 @@ const Home = () => {
     }, []);
 
     const goTavern = () => {
-        navigate('/tavern')
+        moveToMap(MAP.TAVERNE.BAR);
     }
 
     const goExtCastle = () => {
-        navigate('/ext-castle')
+        moveToMap(MAP.FOREST.CASTLE);
     }
 
     const handleStart = () => {

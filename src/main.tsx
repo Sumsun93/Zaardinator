@@ -5,10 +5,10 @@ import './index.css'
 import './assets/stylesheets/animation.css';
 import {Provider} from "react-redux";
 import {store} from "./redux/store";
-import Router from "./router/Router";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import SoundEffect from "./components/SoundEffect";
+import GameBoard from "./pages/GameBoard";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
@@ -28,7 +28,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 }}
             >
                 <SoundEffect />
-                <Router />
+
+                <GameBoard />
             </ConfigProvider>
         </DndProvider>
     </Provider>,
