@@ -4,6 +4,8 @@ import {EVENT} from "./events";
 import {Dialog} from "../types/dialog";
 import {QUEST_ID} from "./quest";
 import {closeNPCDialogBubble} from "../utils/dialog";
+import {changeMap} from "../utils/map";
+import {MAP_NAME} from "./map";
 
 export const DEFAULT_NPC_DIALOG: {[key: string]: Dialog} = {
     [CHARACTER_ID.CHOUMCHOUM]: {
@@ -52,5 +54,22 @@ export const DEFAULT_NPC_DIALOG: {[key: string]: Dialog} = {
                 }
             },
         ],
-    }
+    },
+    [CHARACTER_ID.NKO]: {
+        id: 'default',
+        characterId: CHARACTER_ID.BENJAM,
+        autoPlay: true,
+        text: [
+            'Sors de là malotru ! Ou la haine chaos s’en prendra à toi !'
+        ],
+        disabledByQuests: [QUEST_ID.SAVE_THE_PRINCESS],
+        options: [
+            {
+                text: 'D\'accord',
+                onClick: () => {
+                    changeMap(MAP_NAME.CASTLE.HALL);
+                }
+            },
+        ],
+    },
 };

@@ -10,10 +10,12 @@ import {EVENT} from "../constants/events";
 export interface GameBoardProps {}
 
 const GameBoard: React.FC<GameBoardProps> = ({}) => {
-    const {gameboard} = useGameBoard();
+    const {gameboard, moveToMap} = useGameBoard();
     const {player, nextQuestStepDialog} = usePlayer();
 
     useEvent<QUEST_ID>(EVENT.QUEST.NEXT, nextQuestStepDialog);
+
+    useEvent<string>(EVENT.MAP.UPDATE, moveToMap);
 
     useEffect(() => {
         saveGame(player, gameboard);

@@ -5,6 +5,7 @@ import {QUEST_STEP} from "./questStep";
 import {MAP_NAME} from "./mapName";
 import {closeNPCDialogBubble} from "../utils/dialog";
 import {questNext} from "../utils/quest";
+import {changeMap} from "../utils/map";
 
 export enum QUEST_ID {
     SAVE_THE_PRINCESS = "save-the-princess",
@@ -25,10 +26,10 @@ export const QUESTS: Quest[] = [
                         narratorMap: MAP_NAME.CASTLE.BEDROOM,
                         autoPlay: true,
                         text: [
-                            'Après l’exploration du château en ayant fais le plus attention possible pour ne pas faire de bruit, malgré tes genoux qui claquent, te voilà enfin dans la chambre royale.',
-                            'Tu aperçois le fantôme d’une femme, tu ne sais pas bien comment réagir mais très vite tu te sens épris de tristesse pour elle, pourquoi est elle ici dans cet état ? Que lui est-il arrivé ?',
-                            'Finalement elle se rapproche de toi, en tendant la main gracieusement, elle t’implore de l’aider.',
-                            'Tu comprends avec ces mimes délicats qu’elle t’invite à descendre au plus profond du château, peut être y trouvera tu une solution à son problème ?',
+                            // 'Après l’exploration du château en ayant fais le plus attention possible pour ne pas faire de bruit, malgré tes genoux qui claquent, te voilà enfin dans la chambre royale.',
+                            // 'Tu aperçois le fantôme d’une femme, tu ne sais pas bien comment réagir mais très vite tu te sens épris de tristesse pour elle, pourquoi est elle ici dans cet état ? Que lui est-il arrivé ?',
+                            // 'Finalement elle se rapproche de toi, en tendant la main gracieusement, elle t’implore de l’aider.',
+                            // 'Tu comprends avec ces mimes délicats qu’elle t’invite à descendre au plus profond du château, peut être y trouvera tu une solution à son problème ?',
                             'Le courage et une force inexplicable s\'emparent alors de toi, tu n’as qu’une idée en tête désormais, sauver cette gente dame. Tu adresse alors un sourire maladroit au fantôme et pars pour les profondeurs glaciales du château.'
                         ],
                         options: [
@@ -49,27 +50,31 @@ export const QUESTS: Quest[] = [
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.SPEAK_TO_THE_DUNGEON_KEEPER,
-                        characterId: CHARACTER_ID.DUNGEON_KEEPER,
+                        characterId: CHARACTER_ID.NKO,
                         autoPlay: true,
                         text: [
-                            'Je vois que tu as rencontré notre princesse, je ressens encore sa présence sur toi. Je m\'appelle Nko et je suis le gardien de ces lieux. Si elle t’a accepté alors moi aussi.',
-                            'Elle t’a envoyé ici c’est pour que tu lui vienne en aide. En as-tu vraiment envie ? Bon, saches que nombreux sont les fous qui ont essayé et aucun, n’en est jamais revenu...',
-                            'Très bien tu peux passer. Ou pas d’ailleurs, attends il faut que je te mette en garde sur ce qui t’attends, malheureux ! Tu voudrais pas mourir trop vite quand même ?',
-                            'Au delà de cette porte tu vas rencontrer le terrible et magnificent “Grand Mage” ! Il n’a pas la réputation de tolérer les mauvaises manières. Hors ta dégaine et ta petite taille vont sûrement poser problème. J’ai une idée !',
-                            'Enfile ce pantalon, il a meilleure allure que ton vieux pyjama. Ah et prends aussi ce crâne en guise de présent pour le Grand Mage, je viens juste de le nettoyer.',
+                            // 'Je vois que tu as rencontré notre princesse, je ressens encore sa présence sur toi. Je m\'appelle Nko et je suis le gardien de ces lieux. Si elle t’a accepté alors moi aussi.',
+                            // 'Elle t’a envoyé ici c’est pour que tu lui vienne en aide. En as-tu vraiment envie ? Bon, saches que nombreux sont les fous qui ont essayé et aucun, n’en est jamais revenu...',
+                            // 'Très bien tu peux passer. Ou pas d’ailleurs, attends il faut que je te mette en garde sur ce qui t’attends, malheureux ! Tu voudrais pas mourir trop vite quand même ?',
+                            // 'Au delà de cette porte tu vas rencontrer le terrible et magnificent “Grand Mage” ! Il n’a pas la réputation de tolérer les mauvaises manières. Hors ta dégaine et ta petite taille vont sûrement poser problème. J’ai une idée !',
+                            // 'Enfile ce pantalon, il a meilleure allure que ton vieux pyjama. Ah et prends aussi ce crâne en guise de présent pour le Grand Mage, je viens juste de le nettoyer.',
                             'N’oublies pas de bien réfléchir à ce que tu vas lui dire et d’être extrêmement poli, la moindre erreur te sera fatale. Es-tu prêt ?',
                         ],
                         options: [
                             {
                                 text: 'Je suis prêt !',
                                 nextDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.THE_DARK_ROOM,
+                                onClick: () => {
+                                    questNext(QUEST_ID.SAVE_THE_PRINCESS);
+                                    changeMap(MAP_NAME.CASTLE.LABO);
+                                },
                             }
                         ],
                     },
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.THE_DARK_ROOM,
                         characterId: CHARACTER_ID.NARRATOR,
-                        // narratorMap: MAP_NAME.CASTLE.LABO,
+                        narratorMap: MAP_NAME.CASTLE.LABO,
                         autoPlay: true,
                         text: [
                             'Tu pénètres alors l’antre du Grand Mage, la gorge serrée et le ventre noué. Tu as longuement réfléchi à comment tu allais te présenter. Il va de soi qu’il faudra également complimenter et approuver tout ce que ce terrible Mage allait dire et faire.',

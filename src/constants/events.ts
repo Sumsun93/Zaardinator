@@ -7,4 +7,7 @@ export const EVENT = {
         NEXT_DIALOG: 'event_quest_next_dialog',
         NEXT: 'event_quest_next',
     },
+    MAP: {
+        UPDATE: 'event_map_update',
+    }
 }

@@ -10,7 +10,6 @@ import {DEFAULT_NPC_PROPERTIES} from "../../constants/defaultNPC";
 import {getCharacterBubblePosition} from "../../utils/bubble";
 import {getCurrentDialog, isDialogDisabled, isThisDialogForThisNPC} from "../../utils/dialog";
 import useQuests from "../../hooks/useQuests";
-import {getCurrentQuestStep} from "../../utils/quest";
 import {Dialog} from "../../types/dialog";
 import {getSavedGame} from "../../utils/save";
 
@@ -54,7 +53,7 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
 
         timeout = setTimeout(() => {
             setShowDialog(true);
-        }, 2000);
+        }, 1000);
 
         return () => {
             if (timeout) {
@@ -98,7 +97,7 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
     return (
         <div>
             {npc && dialog && showDialog && (
-                <BubbleContainer style={getCharacterBubblePosition(characterId)}>
+                <BubbleContainer style={getCharacterBubblePosition(characterId, bubblePosition === 'right')}>
                     <FadeIn>
                         <ComicsBubble
                             isNarrator={isNarrator}

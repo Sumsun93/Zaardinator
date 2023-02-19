@@ -2,6 +2,8 @@ import {ActivePlayerQuest, ActiveQuest, Quest} from "../types/quest";
 import {QUEST_ID, QUESTS} from "../constants/quest";
 import {emitEvent} from "./events";
 import {EVENT} from "../constants/events";
+import {getSavedGame} from "./save";
+import backgroundImage1 from "../assets/donjon/ZZ_QUIZ_DONJON_1.webp";
 
 export const isActiveQuest = (playerActiveQuest: ActiveQuest[], questId: QUEST_ID) => {
     return playerActiveQuest.some((activeQuest) => activeQuest.questId === questId);
