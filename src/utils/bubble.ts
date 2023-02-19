@@ -4,14 +4,14 @@ export const getCharacterBubblePosition = (characterId: string) => {
     switch (characterId) {
         case CHARACTER_ID.CHOUMCHOUM:
             return {
-                top: '-11%',
-                left: '-40%',
+                bottom: '96%',
+                left: '-51%',
             };
 
         case CHARACTER_ID.BENJAM:
             return {
-                top: '-30%',
-                right: '17%',
+                bottom: '100%',
+                right: '13%',
             }
         case CHARACTER_ID.NARRATOR:
             return {

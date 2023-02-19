@@ -51,8 +51,6 @@ const QCM = ({
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [values, setValues] = useState<any>([]);
     const [score, setScore] = useState(0);
-    const [drunkTalk, setDrunkTalk] = useState(false);
-    const [startTalk, setStartTalk] = useState(true);
 
     useEffect(() => {
         setValues(randomQuestions.map((data) => data.default))

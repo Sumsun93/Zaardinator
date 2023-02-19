@@ -67,6 +67,7 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
 
     useEffect(() => {
         if (!activeQuests.length) {
+            setDialog(npc?.defaultDialog || null);
             return;
         }
 
