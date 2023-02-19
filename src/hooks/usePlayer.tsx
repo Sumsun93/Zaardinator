@@ -5,9 +5,10 @@ import {
     startNewQuest as reduxStartNewQuest,
     nextQuestStep as reduxNextQuestStep,
     nextQuestStepDialog as reduxNextQuestStepDialog,
+    validateQuest as reduxValidateQuest,
 } from "../redux/features/player/playerSlice";
 import {QUEST_ID} from "../constants/quest";
-import {getCurrentQuestStep, getQuestStep} from "../utils/quest";
+import {getQuestStep, hasNextStep} from "../utils/quest";
 import {hasNextDialog} from "../utils/dialog";
 
 const usePlayer = () => {
@@ -18,13 +19,53 @@ const usePlayer = () => {
         dispatch(reduxStartNewQuest(questId));
     }, []);
 
+    const getActivePlayerQuest = useCallback((questId: QUEST_ID) => {
+        return player.activeQuests.find((quest) => quest.questId === questId);
+    }, [player.activeQuests]);
+
+    const validateQuest = useCallback((questId: QUEST_ID) => {
+        const activePlayerQuest = getActivePlayerQuest(questId);
+
+        if (!activePlayerQuest) {
+            return;
+        }
+
+        const questStep = getQuestStep(activePlayerQuest.questId, activePlayerQuest.currentStepIndex);
+
+        if (
+            !questStep ||
+            hasNextStep(questId, activePlayerQuest.currentStepIndex) ||
+            hasNextDialog(questStep, activePlayerQuest.currentDialogIndex)
+        ) {
+            return;
+        }
+
+        dispatch(reduxValidateQuest(questId));
+    }, [getActivePlayerQuest, dispatch]);
+
     const nextQuestStep = useCallback((questId: QUEST_ID) => {
-        // dispatch(reduxNextQuestStep(questId));
-        console.log('nextQuestStep')
-    }, []);
+        const activePlayerQuest = getActivePlayerQuest(questId);
+
+        if (!activePlayerQuest) {
+            return;
+        }
+
+        const questStep = getQuestStep(activePlayerQuest.questId, activePlayerQuest.currentStepIndex);
+
+        if (!questStep || hasNextDialog(questStep, activePlayerQuest.currentDialogIndex)) {
+            return;
+        }
+
+        if (hasNextStep(questId, activePlayerQuest.currentStepIndex)) {
+            dispatch(reduxNextQuestStep(questId));
+            return;
+        }
+
+        validateQuest(questId);
+    }, [getActivePlayerQuest, validateQuest, dispatch]);
 
     const nextQuestStepDialog = useCallback((questId: QUEST_ID) => {
-        const activePlayerQuest = player.activeQuests.find((quest) => quest.questId === questId);
+        const activePlayerQuest = getActivePlayerQuest(questId);
 
         if (!activePlayerQuest) {
             return;
@@ -42,7 +83,7 @@ const usePlayer = () => {
         }
 
         nextQuestStep(questId);
-    }, [player.activeQuests, nextQuestStep]);
+    }, [getActivePlayerQuest, nextQuestStep, dispatch]);
 
     return {
         player,

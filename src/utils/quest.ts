@@ -1,5 +1,7 @@
 import {ActivePlayerQuest, ActiveQuest, Quest} from "../types/quest";
 import {QUEST_ID, QUESTS} from "../constants/quest";
+import {emitEvent} from "./events";
+import {EVENT} from "../constants/events";
 
 export const isActiveQuest = (playerActiveQuest: ActiveQuest[], questId: QUEST_ID) => {
     return playerActiveQuest.some((activeQuest) => activeQuest.questId === questId);
@@ -72,3 +74,17 @@ export const getQuestStep = (questId: QUEST_ID, stepIndex: number) => {
 
     return quest.steps[stepIndex];
 };
+
+export const questNext = (questId: QUEST_ID) => {
+    emitEvent<QUEST_ID>(EVENT.QUEST.NEXT ,questId);
+}
+
+export const hasNextStep = (questId: QUEST_ID, currentStepIndex: number): boolean => {
+    const quest = getQuest(questId);
+
+    if (!quest) {
+        return false;
+    }
+
+    return !!quest.steps?.[currentStepIndex + 1];
+}

@@ -13,7 +13,7 @@ const GameBoard: React.FC<GameBoardProps> = ({}) => {
     const {gameboard} = useGameBoard();
     const {player, nextQuestStepDialog} = usePlayer();
 
-    useEvent<QUEST_ID>(EVENT.QUEST.NEXT_DIALOG, nextQuestStepDialog);
+    useEvent<QUEST_ID>(EVENT.QUEST.NEXT, nextQuestStepDialog);
 
     useEffect(() => {
         saveGame(player, gameboard);

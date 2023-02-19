@@ -5,5 +5,6 @@ export const EVENT = {
     },
     QUEST: {
         NEXT_DIALOG: 'event_quest_next_dialog',
+        NEXT: 'event_quest_next',
     },
 }

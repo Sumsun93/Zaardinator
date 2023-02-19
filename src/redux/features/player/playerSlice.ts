@@ -75,9 +75,19 @@ export const playerSlice = createSlice({
                 return activeQuest;
             });
         },
+        validateQuest: (state, action: PayloadAction<QUEST_ID>) => {
+            state.activeQuests = state.activeQuests.filter((activeQuest) => activeQuest.questId !== action.payload);
+            state.questsFinished.push(action.payload);
+        },
     },
 });
 
-export const {updatePlayer, startNewQuest, nextQuestStep, nextQuestStepDialog} = playerSlice.actions;
+export const {
+    updatePlayer,
+    startNewQuest,
+    nextQuestStep,
+    nextQuestStepDialog,
+    validateQuest,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;
