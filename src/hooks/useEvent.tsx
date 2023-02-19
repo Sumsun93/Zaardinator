@@ -5,7 +5,7 @@ export type EventCallback<T> = (data: T) => void;
 function useEvent<T>(eventName: string, callback: EventCallback<T>) {
     const handleEventCallback = useCallback((event: CustomEvent<T>) => {
         callback(event?.detail);
-    }, []);
+    }, [callback]);
 
     useEffect(() => {
         // @ts-ignore
@@ -15,7 +15,7 @@ function useEvent<T>(eventName: string, callback: EventCallback<T>) {
             // @ts-ignore
             window.removeEventListener(eventName, handleEventCallback);
         };
-    }, [callback, eventName]);
+    }, [handleEventCallback, eventName]);
 
     return null;
 };

@@ -3,4 +3,7 @@ export const EVENT = {
     CHOUMCHOUM: {
         START_QCM: 'event_choumchoum_start_qcm',
     },
+    QUEST: {
+        NEXT_DIALOG: 'event_quest_next_dialog',
+    },
 }

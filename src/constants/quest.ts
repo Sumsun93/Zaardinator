@@ -3,7 +3,7 @@ import {DIALOG_ID} from "./dialog";
 import {CHARACTER_ID} from "./character";
 import {QUEST_STEP} from "./questStep";
 import {MAP_NAME} from "./mapName";
-import {closeNPCDialogBubble} from "../utils/dialog";
+import {closeNPCDialogBubble, nextNPCDialog} from "../utils/dialog";
 
 export enum QUEST_ID {
     SAVE_THE_PRINCESS = "save-the-princess",
@@ -24,23 +24,23 @@ export const QUESTS: Quest[] = [
                         narratorMap: MAP_NAME.CASTLE.BEDROOM,
                         autoPlay: true,
                         text: [
-                            'Après l’exploration du château en ayant fais le plus attention possible pour ne pas faire de bruit, malgré tes genoux qui claquent, te voilà enfin dans la chambre royale.',
-                            'Tu aperçois le fantôme d’une femme, tu ne sais pas bien comment réagir mais très vite tu te sens épris de tristesse pour elle, pourquoi est elle ici dans cet état ? Que lui est-il arrivé ?',
-                            'Finalement elle se rapproche de toi, en tendant la main gracieusement, elle t’implore de l’aider.',
-                            'Tu comprends avec ces mimes délicats qu’elle t’invite à descendre au plus profond du château, peut être y trouvera tu une solution à son problème ?',
+                            // 'Après l’exploration du château en ayant fais le plus attention possible pour ne pas faire de bruit, malgré tes genoux qui claquent, te voilà enfin dans la chambre royale.',
+                            // 'Tu aperçois le fantôme d’une femme, tu ne sais pas bien comment réagir mais très vite tu te sens épris de tristesse pour elle, pourquoi est elle ici dans cet état ? Que lui est-il arrivé ?',
+                            // 'Finalement elle se rapproche de toi, en tendant la main gracieusement, elle t’implore de l’aider.',
+                            // 'Tu comprends avec ces mimes délicats qu’elle t’invite à descendre au plus profond du château, peut être y trouvera tu une solution à son problème ?',
                             'Le courage et une force inexplicable s\'emparent alors de toi, tu n’as qu’une idée en tête désormais, sauver cette gente dame. Tu adresse alors un sourire maladroit au fantôme et pars pour les profondeurs glaciales du château.'
                         ],
                         options: [
                             {
                                 text: 'Continuer',
                                 onClick: () => {
-                                   closeNPCDialogBubble(CHARACTER_ID.NARRATOR)
+                                    closeNPCDialogBubble(CHARACTER_ID.NARRATOR);
+                                    nextNPCDialog(QUEST_ID.SAVE_THE_PRINCESS);
                                 },
                             }
                         ],
                     }
                 ],
-                currentDialogIndex: 0,
             },
             {
                 name: QUEST_STEP.SAVE_THE_PRINCESS.MEET_THE_MAGICIAN.name,
@@ -100,7 +100,6 @@ export const QUESTS: Quest[] = [
                         ],
                     },
                 ],
-                currentDialogIndex: 0,
             },
             {
                 name: QUEST_STEP.SAVE_THE_PRINCESS.FIND_DRAGON_BLOOD.name,
@@ -135,7 +134,6 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogIndex: 0,
             },
             {
                 name: QUEST_STEP.SAVE_THE_PRINCESS.BRINGING_THE_POTION_TO_THE_PRINCESS.name,
@@ -156,7 +154,6 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogIndex: 0,
             },
             {
                 name: QUEST_STEP.SAVE_THE_PRINCESS.THE_PRINCESS_IS_SAVED.name,
@@ -178,7 +175,6 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogIndex: 0,
             }
         ],
     }

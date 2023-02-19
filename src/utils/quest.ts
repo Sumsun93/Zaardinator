@@ -49,6 +49,7 @@ export const getQuestsByActiveQuests = (activeQuests: ActiveQuest[]): ActivePlay
             return {
                 ...quest,
                 currentStepIndex: activeQuest.currentStepIndex,
+                currentDialogIndex: activeQuest.currentDialogIndex,
             }
         }
 
@@ -60,4 +61,14 @@ export const getQuestsByActiveQuests = (activeQuests: ActiveQuest[]): ActivePlay
 
 export const getCurrentQuestStep = (quest: ActivePlayerQuest) => {
     return quest.steps[quest.currentStepIndex];
+};
+
+export const getQuestStep = (questId: QUEST_ID, stepIndex: number) => {
+    const quest = getQuest(questId);
+
+    if (!quest) {
+        return null;
+    }
+
+    return quest.steps[stepIndex];
 };

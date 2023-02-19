@@ -11,7 +11,6 @@ export interface QuestStep {
     name: string;
     dialogs?: Dialog[];
     requirements?: QuestStepRequirements;
-    currentDialogIndex: number;
 }
 
 export interface QuestRequirement {
@@ -29,6 +28,7 @@ export interface Quest {
 export interface ActiveQuest {
     questId: QUEST_ID;
     currentStepIndex: number;
+    currentDialogIndex: number;
 }
 
-export interface ActivePlayerQuest extends Quest, Pick<ActiveQuest, 'currentStepIndex'> {}
+export interface ActivePlayerQuest extends Quest, Pick<ActiveQuest, 'currentStepIndex' | 'currentDialogIndex'> {}

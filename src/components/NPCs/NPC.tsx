@@ -54,7 +54,7 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
 
         timeout = setTimeout(() => {
             setShowDialog(true);
-        }, 2500);
+        }, 2000);
 
         return () => {
             if (timeout) {
@@ -70,7 +70,7 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
             return;
         }
 
-        const dialog = getCurrentDialog(getCurrentQuestStep(activeQuests[0]));
+        const dialog = getCurrentDialog(activeQuests[0]);
 
         if (!dialog || !isThisDialogForThisNPC(dialog, characterId)) {
             setDialog(npc?.defaultDialog || null);

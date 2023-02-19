@@ -3,6 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Player} from "../../../types/character";
 import {QUEST_ID} from "../../../constants/quest";
 import {getSavedGame} from "../../../utils/save";
+import {hasNextDialog} from "../../../utils/dialog";
 
 const gameSave = getSavedGame();
 
@@ -47,9 +48,10 @@ export const playerSlice = createSlice({
             state.activeQuests.push({
                 questId: action.payload,
                 currentStepIndex: 0,
+                currentDialogIndex: 0,
             });
         },
-        validateQuestStep: (state, action: PayloadAction<QUEST_ID>) => {
+        nextQuestStep: (state, action: PayloadAction<QUEST_ID>) => {
             state.activeQuests = state.activeQuests.map((activeQuest) => {
                 if (activeQuest.questId === action.payload) {
                     return {
@@ -61,9 +63,21 @@ export const playerSlice = createSlice({
                 return activeQuest;
             });
         },
+        nextQuestStepDialog: (state, action: PayloadAction<QUEST_ID>) => {
+            state.activeQuests = state.activeQuests.map((activeQuest) => {
+                if (activeQuest.questId === action.payload) {
+                    return {
+                        ...activeQuest,
+                        currentDialogIndex: activeQuest.currentDialogIndex + 1,
+                    };
+                }
+
+                return activeQuest;
+            });
+        },
     },
 });
 
-export const {updatePlayer, startNewQuest, validateQuestStep} = playerSlice.actions;
+export const {updatePlayer, startNewQuest, nextQuestStep, nextQuestStepDialog} = playerSlice.actions;
 
 export default playerSlice.reducer;
