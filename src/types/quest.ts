@@ -1,6 +1,5 @@
 import {QUEST_ID} from "../constants/quest";
 import {Dialog} from "./dialog";
-import {DIALOG_ID} from "../constants/dialog";
 import {Item} from "./item";
 
 export interface QuestStepRequirements {
@@ -8,10 +7,11 @@ export interface QuestStepRequirements {
 }
 
 export interface QuestStep {
+    id: string;
     name: string;
     dialogs?: Dialog[];
     requirements?: QuestStepRequirements;
-    currentDialogId: string;
+    currentDialogIndex: number;
 }
 
 export interface QuestRequirement {
@@ -28,8 +28,7 @@ export interface Quest {
 
 export interface ActiveQuest {
     questId: QUEST_ID;
-    currentStep: {
-        stepIndex: number;
-        dialogId: string;
-    };
+    currentStepIndex: number;
 }
+
+export interface ActivePlayerQuest extends Quest, Pick<ActiveQuest, 'currentStepIndex'> {}

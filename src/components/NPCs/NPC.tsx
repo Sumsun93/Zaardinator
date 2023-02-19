@@ -8,22 +8,30 @@ import {getCloseDialogEventName} from "../../utils/events";
 import useEvent from "../../hooks/useEvent";
 import {DEFAULT_NPC_PROPERTIES} from "../../constants/defaultNPC";
 import {getCharacterBubblePosition} from "../../utils/bubble";
+import {getCurrentDialog, isDialogDisabled, isThisDialogForThisNPC} from "../../utils/dialog";
+import useQuests from "../../hooks/useQuests";
+import {getCurrentQuestStep} from "../../utils/quest";
+import {Dialog} from "../../types/dialog";
+import {getSavedGame} from "../../utils/save";
 
 export interface NPCProps {
     characterId: CHARACTER_ID;
     bubblePosition?: 'left' | 'right';
+    npcStyle?: React.CSSProperties;
 }
 
-const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right'}) => {
+const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyle}) => {
     const {npc, create} = useNPC(characterId);
+    const {activeQuests} = useQuests();
 
+    const [dialog, setDialog] = useState<Dialog | null>(null);
     const [showDialog, setShowDialog] = useState(false);
 
     const handleOnClick = useCallback(() => {
-        if (!showDialog) {
+        if (!showDialog && dialog && !isDialogDisabled(dialog)) {
             setShowDialog(true);
         }
-    }, [showDialog]);
+    }, [showDialog, dialog]);
 
     useEffect(() => {
         if (npc) {
@@ -38,49 +46,80 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right'}) => {
     }, [npc]);
 
     useEffect(() => {
-        if (!npc?.defaultDialog.autoPlay) {
+        let timeout: number = -1;
+
+        if (!dialog || isDialogDisabled(dialog) || !dialog.autoPlay) {
             return;
         }
 
-        const timeout = setTimeout(() => {
-            if (npc?.defaultDialog.autoPlay) {
-                setShowDialog(true);
-            }
+        timeout = setTimeout(() => {
+            setShowDialog(true);
         }, 2500);
 
         return () => {
-            clearTimeout(timeout);
+            if (timeout) {
+                clearTimeout(timeout);
+            }
         }
-    }, [npc?.defaultDialog.autoPlay]);
+    }, [dialog]);
 
     useEvent<boolean>(getCloseDialogEventName(characterId), setShowDialog);
 
-    if (!npc || !CHARACTER_ASSETS?.[characterId]) {
+    useEffect(() => {
+        if (!activeQuests.length) {
+            return;
+        }
+
+        const dialog = getCurrentDialog(getCurrentQuestStep(activeQuests[0]));
+
+        if (!dialog || !isThisDialogForThisNPC(dialog, characterId)) {
+            setDialog(npc?.defaultDialog || null);
+            return;
+        }
+
+        if (characterId === CHARACTER_ID.NARRATOR) {
+            const gameSave = getSavedGame();
+
+            if (gameSave?.gameboard.currentMap !== dialog.narratorMap) {
+                return;
+            }
+        }
+
+        setDialog(dialog);
+    }, [activeQuests, npc?.defaultDialog, characterId]);
+
+    if (!npc) {
         return null;
     }
 
+    const isNarrator = characterId === CHARACTER_ID.NARRATOR;
+
     return (
         <div>
-            {npc && npc.defaultDialog && showDialog && (
+            {npc && dialog && showDialog && (
                 <BubbleContainer style={getCharacterBubblePosition(characterId)}>
                     <FadeIn>
                         <ComicsBubble
+                            isNarrator={isNarrator}
                             right={bubblePosition === 'right'}
                             firstLayer
                             style={{
                                 width: '25vw',
                             }}
-                            dialog={npc.defaultDialog}
+                            dialog={dialog}
                         />
                     </FadeIn>
                 </BubbleContainer>
             )}
 
-            <img
-                onClick={handleOnClick}
-                src={CHARACTER_ASSETS[characterId]}
-                alt={characterId}
-            />
+            {CHARACTER_ASSETS[characterId] && (
+                <img
+                    onClick={handleOnClick}
+                    src={CHARACTER_ASSETS[characterId]}
+                    alt={characterId}
+                    style={npcStyle}
+                />
+            )}
         </div>
     );
 };

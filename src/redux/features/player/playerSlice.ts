@@ -1,15 +1,20 @@
 import {CHARACTER_ID, CHARACTER_TYPE} from "../../../constants/character";
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Player} from "../../../types/character";
+import {QUEST_ID} from "../../../constants/quest";
+import {getSavedGame} from "../../../utils/save";
+
+const gameSave = getSavedGame();
 
 const initialState: Player = {
     id: CHARACTER_ID.PLAYER,
     type: CHARACTER_TYPE.PLAYER,
-    name: 'Benjam',
-    level: 1,
-    health: 42,
-    armor: 0,
-    inventory: {
+    name: gameSave?.player.name || 'Benjam',
+    level: gameSave?.player.level || 1,
+    health: gameSave?.player.health || 42,
+    armor: gameSave?.player.armor || 0,
+    experience: gameSave?.player.experience || 0,
+    inventory: gameSave?.player.inventory || {
         slots: 1,
         items: [],
         money: null,
@@ -29,8 +34,8 @@ const initialState: Player = {
             rightWeapon: null,
         }
     },
-    questsFinished: [],
-    activeQuests: [],
+    questsFinished: gameSave?.player.questsFinished || [],
+    activeQuests: gameSave?.player.activeQuests || [],
 }
 
 export const playerSlice = createSlice({
@@ -38,9 +43,27 @@ export const playerSlice = createSlice({
     initialState,
     reducers: {
         updatePlayer: (state, action) => {},
+        startNewQuest: (state, action: PayloadAction<QUEST_ID>) => {
+            state.activeQuests.push({
+                questId: action.payload,
+                currentStepIndex: 0,
+            });
+        },
+        validateQuestStep: (state, action: PayloadAction<QUEST_ID>) => {
+            state.activeQuests = state.activeQuests.map((activeQuest) => {
+                if (activeQuest.questId === action.payload) {
+                    return {
+                        ...activeQuest,
+                        currentStepIndex: activeQuest.currentStepIndex + 1,
+                    };
+                }
+
+                return activeQuest;
+            });
+        },
     },
 });
 
-export const {updatePlayer} = playerSlice.actions;
+export const {updatePlayer, startNewQuest, validateQuestStep} = playerSlice.actions;
 
 export default playerSlice.reducer;

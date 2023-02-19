@@ -13,5 +13,15 @@ export const getCharacterBubblePosition = (characterId: string) => {
                 top: '-30%',
                 right: '17%',
             }
+        case CHARACTER_ID.NARRATOR:
+            return {
+                bottom: '11vh',
+                left: `calc(50vw - 12.5vw - 15px)`,
+            };
+        default:
+            return {
+                top: 0,
+                left: 0,
+            };
     }
 };

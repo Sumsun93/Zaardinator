@@ -12,7 +12,7 @@ const useGameBoard = () => {
     }, [dispatch]);
 
     return {
-        ...gameboard,
+        gameboard,
         moveToMap,
     };
 };

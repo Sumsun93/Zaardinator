@@ -1,32 +1,50 @@
-import {Button, Col, Row} from "antd";
 import styled, {keyframes} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "./Layout";
 import backgroundImage from '../assets/bedroom/ZZ_QUIZ_CHAMBRE.webp'
-import princess1 from '../assets/bedroom/ZZ_QUIZ_Phantome_B.svg'
-import princess2 from '../assets/bedroom/ZZ_QUIZ_Phantome_Transformation.svg'
 import chandelier from '../assets/bedroom/ZZ_QUIZ_LUSTRE.svg'
-import {useNavigate} from "react-router-dom";
 import {RootState} from "../redux/store";
 import QUEST_STATES from "../constants/questStates";
-import {setQuestState, setShortEffect, setSoundToPlay, validQuestDrop} from "../redux/features/game/gameSlice";
+import {setShortEffect, setSoundToPlay, validQuestDrop} from "../redux/features/game/gameSlice";
 import ITEMS from "../constants/items";
 import DropContainer from "../components/DropContainer";
 import {useEffect} from "react";
 import {SOUNDS} from "../components/SoundEffect";
-import ComicsBubble from "../components/ComicsBubble";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP, MAP_NAME} from "../constants/map";
+import {MAP_NAME} from "../constants/map";
+import usePlayer from "../hooks/usePlayer";
+import {QUEST_ID} from "../constants/quest";
+import NPC from "../components/NPCs/NPC";
+import {CHARACTER_ID} from "../constants/character";
+import {
+    getQuest,
+    getQuestStepIndex,
+    isActiveQuestIsAfterStep,
+    isActiveQuestIsBeforeStep,
+    isQuestCompleted
+} from "../utils/quest";
+import {QUEST_STEP} from "../constants/questStep";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Bedroom = () => {
     const {questState} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
     const {moveToMap} = useGameBoard();
+    const {startNewQuest, player} = usePlayer();
 
     const goCastle = () => {
         moveToMap(MAP_NAME.CASTLE.HALL);
     }
+
+    useEffect(() => {
+        if (player.questsFinished.includes(QUEST_ID.SAVE_THE_PRINCESS)) {
+            return;
+        }
+
+        if (!player.activeQuests.some((quest) => quest.questId === QUEST_ID.SAVE_THE_PRINCESS)) {
+            startNewQuest(QUEST_ID.SAVE_THE_PRINCESS);
+        }
+    }, [player.activeQuests, player.questsFinished]);
 
     useEffect(() => {
         if (questState === QUEST_STATES.DONE) {
@@ -92,6 +110,9 @@ const Bedroom = () => {
                 src={chandelier}
                 alt={'Chandelier'}
             />
+
+            <NPC characterId={CHARACTER_ID.NARRATOR} />
+
             <DropContainer
                 onDrop={onDrop({
                     neededState: QUEST_STATES.STATE_7,
@@ -106,7 +127,7 @@ const Bedroom = () => {
                     zIndex: 5,
                 }}
             >
-                {questState === QUEST_STATES.DONE && (
+                {/*{questState === QUEST_STATES.DONE && (
                     <ComicsBubble
                         style={{
                             position: 'absolute',
@@ -122,17 +143,29 @@ const Bedroom = () => {
                             window.open('https://www.youtube.com/watch?v=_T2cU0TA9hE', '_blank');
                         }}
                     />
-                )}
-                <Princess
-                    src={questState === QUEST_STATES.DONE ? princess2 : princess1}
-                    alt={'Princesse'}
-                />
+                )}*/}
+
+                <PrincessContainer>
+                    {isActiveQuestIsBeforeStep(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, getQuestStepIndex(getQuest(QUEST_ID.SAVE_THE_PRINCESS), QUEST_STEP.SAVE_THE_PRINCESS.THE_PRINCESS_IS_SAVED.id)) && (
+                        <NPC characterId={CHARACTER_ID.GHOST_PRINCESS} npcStyle={{height: '60vh'}} />
+                    )}
+
+                    {(
+                        isActiveQuestIsAfterStep(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, getQuestStepIndex(getQuest(QUEST_ID.SAVE_THE_PRINCESS), QUEST_STEP.SAVE_THE_PRINCESS.BRINGING_THE_POTION_TO_THE_PRINCESS.id)) ||
+                        isQuestCompleted(player.questsFinished, QUEST_ID.SAVE_THE_PRINCESS)
+                    ) && (
+                        <NPC characterId={CHARACTER_ID.PRINCESS} npcStyle={{height: '60vh'}} />
+                    )}
+                </PrincessContainer>
             </DropContainer>
-            <Row gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
+
+            {/*<Row
+                gutter={[24, 24]} justify={'space-between'} align={'bottom'} style={{
                 marginTop: 30,
                 width: '100%',
                 height: '100%',
-            }}>
+            }}
+            >
                 {questState === QUEST_STATES.NOT_STARTED && (
                     <NarratorContainer>
                         <ComicsBubble
@@ -153,6 +186,7 @@ const Bedroom = () => {
                         />
                     </NarratorContainer>
                 )}
+
                 {questState === QUEST_STATES.STATE_7 && (
                     <NarratorContainer>
                         <ComicsBubble
@@ -166,7 +200,7 @@ const Bedroom = () => {
                         />
                     </NarratorContainer>
                 )}
-            </Row>
+            </Row>*/}
         </Layout>
     )
 }
@@ -174,13 +208,11 @@ const Bedroom = () => {
 export default Bedroom
 
 const PrincessContainer = styled.div`
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  height: 60vh;
 `;
 
 const Princess = styled.img`
-    height: 60vh;
+  height: 60vh;
 `;
 
 const balancing = keyframes`
@@ -196,24 +228,24 @@ const balancing = keyframes`
 `;
 
 const Chandelier = styled.img`
-    position: absolute;
-    top: 0;
-    left: calc(50% - 10vw);
-    height: 30vh;
-    animation-name: ${balancing};
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 10vw);
+  height: 30vh;
+  animation-name: ${balancing};
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 `;
 
 const NarratorContainer = styled.div`
-    position: absolute;
-    margin-bottom: 5vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    z-index: 10;
+  position: absolute;
+  margin-bottom: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 10;
 `;

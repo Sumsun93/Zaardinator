@@ -2,6 +2,7 @@ import React from "react";
 import styled, {css, keyframes} from "styled-components";
 import Typewriter from 'typewriter-effect';
 import {Dialog} from "../types/dialog";
+import {CHARACTER_ID} from "../constants/character";
 
 export interface ComicsBubbleProps {
     dialog: Dialog;
@@ -45,7 +46,7 @@ const ComicsBubble: React.FC<ComicsBubbleProps> = ({dialog, firstLayer, fadeOut,
             fadeOut={fadeOut}
             style={style}
             right={right}
-            isNarrator={dialog.isNarrator}
+            isNarrator={dialog.characterId === CHARACTER_ID.NARRATOR}
         >
             <Typewriter
                 onInit={(typewriter) => {

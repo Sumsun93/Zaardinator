@@ -1,9 +1,12 @@
 import barman from "../assets/tavern/ZZ_QUIZ_Barman.svg";
 import alcoolique from "../assets/tavern/ZZ_QUIZ_alcoolique.svg";
+import princess1 from "../assets/bedroom/ZZ_QUIZ_Phantome_B.svg";
+import princess2 from "../assets/bedroom/ZZ_QUIZ_Phantome_Transformation.svg";
 
 export enum CHARACTER_ID {
     PLAYER = 'character_player',
     PRINCESS = 'character_princess',
+    GHOST_PRINCESS = 'character_ghost_princess',
     MAGICIAN = 'character_magician',
     DUNGEON_KEEPER = 'character_dungeon_keeper',
     NARRATOR = 'character_narrator',
@@ -18,7 +21,8 @@ export enum CHARACTER_TYPE {
 
 export const CHARACTER_ASSETS = {
     [CHARACTER_ID.PLAYER]: undefined,
-    [CHARACTER_ID.PRINCESS]: undefined,
+    [CHARACTER_ID.PRINCESS]: princess2,
+    [CHARACTER_ID.GHOST_PRINCESS]: princess1,
     [CHARACTER_ID.MAGICIAN]: undefined,
     [CHARACTER_ID.DUNGEON_KEEPER]: undefined,
     [CHARACTER_ID.NARRATOR]: undefined,

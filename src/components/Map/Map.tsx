@@ -5,9 +5,9 @@ import {MAP} from "../../constants/map";
 export interface MapProps {}
 
 const Map: React.FC<MapProps> = ({}) => {
-    const {currentMap} = useGameBoard();
+    const {gameboard} = useGameBoard();
 
-    const View = MAP[currentMap];
+    const View = MAP[gameboard.currentMap];
 
     return <View />;
 };

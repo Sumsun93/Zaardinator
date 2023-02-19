@@ -1,12 +1,15 @@
 import {CHARACTER_ID} from "./character";
-import {emitEvent, getCloseDialogEventName} from "../utils/events";
+import {emitEvent} from "../utils/events";
 import {EVENT} from "./events";
+import {Dialog} from "../types/dialog";
+import {QUEST_ID} from "./quest";
+import {closeNPCDialogBubble} from "../utils/dialog";
 
-export const DEFAULT_NPC_DIALOG = {
+export const DEFAULT_NPC_DIALOG: {[key: string]: Dialog} = {
     [CHARACTER_ID.CHOUMCHOUM]: {
         id: 'default',
         characterId: CHARACTER_ID.CHOUMCHOUM,
-        autoPlay: false, // TODO need to be true in prod
+        autoPlay: true,
         text: [
             'B\'soir, bienvenue à la taverne des Trois Chaînes, Choumchoum pour t\'servir !',
             'T\'es prêt à répondre à mes questions ?',
@@ -15,7 +18,7 @@ export const DEFAULT_NPC_DIALOG = {
             {
                 text: 'Oui',
                 onClick: () => {
-                    emitEvent<boolean>(getCloseDialogEventName(CHARACTER_ID.CHOUMCHOUM), false);
+                    closeNPCDialogBubble(CHARACTER_ID.CHOUMCHOUM);
                     emitEvent(EVENT.CHOUMCHOUM.START_QCM);
 
                 }
@@ -23,7 +26,7 @@ export const DEFAULT_NPC_DIALOG = {
             {
                 text: 'Au revoir',
                 onClick: () => {
-                    emitEvent<boolean>(getCloseDialogEventName(CHARACTER_ID.CHOUMCHOUM), false);
+                    closeNPCDialogBubble(CHARACTER_ID.CHOUMCHOUM);
                 },
             },
         ],
@@ -32,6 +35,7 @@ export const DEFAULT_NPC_DIALOG = {
         id: 'default',
         characterId: CHARACTER_ID.BENJAM,
         autoPlay: false,
+        disabledByQuests: [QUEST_ID.SAVE_THE_PRINCESS],
         text: [
             'Hep’s toi là ! Tu cherches un truc à faire ?',
             'Il y a une légende qui circule depuis des lustres dans les parages. T’as l’air vaillant, ça t’intéresse ?',
@@ -44,7 +48,7 @@ export const DEFAULT_NPC_DIALOG = {
             {
                 text: 'D\'accord',
                 onClick: () => {
-                    emitEvent<boolean>(getCloseDialogEventName(CHARACTER_ID.BENJAM), false);
+                    closeNPCDialogBubble(CHARACTER_ID.BENJAM);
                 }
             },
         ],

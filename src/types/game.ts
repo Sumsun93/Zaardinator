@@ -1,7 +1,4 @@
-import {Quest} from "./quest";
-
 export interface GameBoard {
-    quests: Quest[];
     currentMap: string;
 }
 

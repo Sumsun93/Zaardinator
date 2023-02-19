@@ -1,6 +1,9 @@
 import {Quest} from "../types/quest";
 import {DIALOG_ID} from "./dialog";
 import {CHARACTER_ID} from "./character";
+import {QUEST_STEP} from "./questStep";
+import {MAP_NAME} from "./mapName";
+import {closeNPCDialogBubble} from "../utils/dialog";
 
 export enum QUEST_ID {
     SAVE_THE_PRINCESS = "save-the-princess",
@@ -12,11 +15,14 @@ export const QUESTS: Quest[] = [
         name: "Save the Princess",
         steps: [
             {
+                name: QUEST_STEP.SAVE_THE_PRINCESS.INTRO.name,
+                id: QUEST_STEP.SAVE_THE_PRINCESS.INTRO.id,
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_1.INTRO,
-                        characterId: CHARACTER_ID.PRINCESS,
-                        isNarrator: true,
+                        characterId: CHARACTER_ID.NARRATOR,
+                        narratorMap: MAP_NAME.CASTLE.BEDROOM,
+                        autoPlay: true,
                         text: [
                             'Après l’exploration du château en ayant fais le plus attention possible pour ne pas faire de bruit, malgré tes genoux qui claquent, te voilà enfin dans la chambre royale.',
                             'Tu aperçois le fantôme d’une femme, tu ne sais pas bien comment réagir mais très vite tu te sens épris de tristesse pour elle, pourquoi est elle ici dans cet état ? Que lui est-il arrivé ?',
@@ -27,13 +33,18 @@ export const QUESTS: Quest[] = [
                         options: [
                             {
                                 text: 'Continuer',
+                                onClick: () => {
+                                   closeNPCDialogBubble(CHARACTER_ID.NARRATOR)
+                                },
                             }
                         ],
                     }
                 ],
-                currentDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_1.INTRO,
+                currentDialogIndex: 0,
             },
             {
+                name: QUEST_STEP.SAVE_THE_PRINCESS.MEET_THE_MAGICIAN.name,
+                id: QUEST_STEP.SAVE_THE_PRINCESS.MEET_THE_MAGICIAN.id,
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.SPEAK_TO_THE_DUNGEON_KEEPER,
@@ -57,7 +68,7 @@ export const QUESTS: Quest[] = [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.THE_DARK_ROOM,
                         characterId: CHARACTER_ID.NARRATOR,
-                        isNarrator: true,
+                        // narratorMap: MAP_NAME.CASTLE.LABO,
                         autoPlay: true,
                         text: [
                             'Tu pénètres alors l’antre du Grand Mage, la gorge serrée et le ventre noué. Tu as longuement réfléchi à comment tu allais te présenter. Il va de soi qu’il faudra également complimenter et approuver tout ce que ce terrible Mage allait dire et faire.',
@@ -89,9 +100,11 @@ export const QUESTS: Quest[] = [
                         ],
                     },
                 ],
-                currentDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.SPEAK_TO_THE_DUNGEON_KEEPER,
+                currentDialogIndex: 0,
             },
             {
+                name: QUEST_STEP.SAVE_THE_PRINCESS.FIND_DRAGON_BLOOD.name,
+                id: QUEST_STEP.SAVE_THE_PRINCESS.FIND_DRAGON_BLOOD.id,
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_3.PUT_POTION_IN_ALAMBIC,
@@ -122,14 +135,16 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_3.PUT_POTION_IN_ALAMBIC,
+                currentDialogIndex: 0,
             },
             {
+                name: QUEST_STEP.SAVE_THE_PRINCESS.BRINGING_THE_POTION_TO_THE_PRINCESS.name,
+                id: QUEST_STEP.SAVE_THE_PRINCESS.BRINGING_THE_POTION_TO_THE_PRINCESS.id,
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_4.BRINGING_THE_POTION_TO_THE_PRINCESS,
-                        characterId: CHARACTER_ID.PRINCESS,
-                        isNarrator: true,
+                        characterId: CHARACTER_ID.NARRATOR,
+                        // narratorMap: MAP_NAME.CASTLE.BEDROOM,
                         autoPlay: true,
                         text: [
                             'Nerveux, tu regardes le fantôme virevoltant au-dessus de son lit. tu inspires profondément, débouches la fiole et la tend au fantôme.',
@@ -141,14 +156,16 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_4.BRINGING_THE_POTION_TO_THE_PRINCESS,
+                currentDialogIndex: 0,
             },
             {
+                name: QUEST_STEP.SAVE_THE_PRINCESS.THE_PRINCESS_IS_SAVED.name,
+                id: QUEST_STEP.SAVE_THE_PRINCESS.THE_PRINCESS_IS_SAVED.id,
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_5.THE_PRINCESS_IS_SAVED,
-                        characterId: CHARACTER_ID.PRINCESS,
-                        isNarrator: true,
+                        characterId: CHARACTER_ID.NARRATOR,
+                        // narratorMap: MAP_NAME.CASTLE.BEDROOM,
                         autoPlay: true,
                         text: [
                             '“ Une lumière intense jaillit alors dans la pièce, tu es éblouis et confus mais tu te sens bien. Une chaleur douce s’empare de ton corps, tu es comme bercé d’une sérénité sans pareil. C’est à ce moment là qu’une main vient se poser sur la tienne.”',
@@ -161,7 +178,7 @@ export const QUESTS: Quest[] = [
                         ],
                     }
                 ],
-                currentDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_5.THE_PRINCESS_IS_SAVED,
+                currentDialogIndex: 0,
             }
         ],
     }

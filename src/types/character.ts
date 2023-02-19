@@ -12,6 +12,7 @@ export interface Character {
     level: number;
     health: number;
     armor: number;
+    experience: number;
     inventory: CharacterInventory;
 }
 
