@@ -7,11 +7,10 @@ import {FadeIn} from "../transitions/transitions";
 import {getCloseDialogEventName} from "../../utils/events";
 import useEvent from "../../hooks/useEvent";
 import {DEFAULT_NPC_PROPERTIES} from "../../constants/defaultNPC";
-import {getCharacterBubblePosition} from "../../utils/bubble";
 import {getCurrentDialog, isDialogDisabled, isThisDialogForThisNPC} from "../../utils/dialog";
 import useQuests from "../../hooks/useQuests";
 import {Dialog} from "../../types/dialog";
-import {getSavedGame} from "../../utils/save";
+import useGameBoard from "../../hooks/useGameBoard";
 
 export interface NPCProps {
     characterId: CHARACTER_ID;
@@ -22,6 +21,7 @@ export interface NPCProps {
 const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyle}) => {
     const {npc, create} = useNPC(characterId);
     const {activeQuests} = useQuests();
+    const {gameboard} = useGameBoard();
 
     const [dialog, setDialog] = useState<Dialog | null>(null);
     const [showDialog, setShowDialog] = useState(false);
@@ -77,16 +77,12 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
             return;
         }
 
-        if (characterId === CHARACTER_ID.NARRATOR) {
-            const gameSave = getSavedGame();
-
-            if (gameSave?.gameboard.currentMap !== dialog.narratorMap) {
-                return;
-            }
+        if (characterId === CHARACTER_ID.NARRATOR && gameboard.currentMap !== dialog.narratorMap) {
+            return;
         }
 
         setDialog(dialog);
-    }, [activeQuests, npc?.defaultDialog, characterId]);
+    }, [activeQuests, npc?.defaultDialog, characterId, gameboard]);
 
     if (!npc) {
         return null;
@@ -95,9 +91,12 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
     const isNarrator = characterId === CHARACTER_ID.NARRATOR;
 
     return (
-        <div>
+        <Wrapper isNarrator={isNarrator}>
             {npc && dialog && showDialog && (
-                <BubbleContainer style={getCharacterBubblePosition(characterId, bubblePosition === 'right')}>
+                <BubbleContainer
+                    characterId={characterId}
+                    right={bubblePosition === 'right'}
+                >
                     <FadeIn>
                         <ComicsBubble
                             isNarrator={isNarrator}
@@ -112,7 +111,13 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
                 </BubbleContainer>
             )}
 
-            {CHARACTER_ASSETS[characterId] && (
+            {CHARACTER_ASSETS[characterId] && typeof CHARACTER_ASSETS[characterId] === 'object' && (
+                <div onClick={handleOnClick} style={npcStyle}>
+                    {CHARACTER_ASSETS[characterId]}
+                </div>
+            )}
+
+            {CHARACTER_ASSETS[characterId] && typeof CHARACTER_ASSETS[characterId] === 'string' && (
                 <img
                     onClick={handleOnClick}
                     src={CHARACTER_ASSETS[characterId]}
@@ -120,13 +125,114 @@ const NPC: React.FC<NPCProps> = ({characterId, bubblePosition = 'right', npcStyl
                     style={npcStyle}
                 />
             )}
-        </div>
+        </Wrapper>
     );
 };
 
 export default NPC;
 
-const BubbleContainer = styled.div`
+const Wrapper = styled.div<{isNarrator: boolean}>`
+  position: relative;
+  
+  ${({isNarrator}) => {
+    if (isNarrator) {
+      return {
+        width: '100%',
+        height: '100%',
+      };
+    }
+
+    return {};
+  }}
+`
+
+const BubbleContainer = styled.div<{ characterId: CHARACTER_ID, right: boolean }>`
   position: absolute;
   z-index: 100;
+
+  ${({characterId, right}) => {
+    switch (characterId) {
+      case CHARACTER_ID.CHOUMCHOUM:
+        return {
+          bottom: '96%',
+          right: '50%',
+        };
+      case CHARACTER_ID.BENJAM:
+        return {
+          bottom: '100%',
+          right: '11%',
+        }
+      case CHARACTER_ID.NARRATOR:
+        return {
+          bottom: '5vh',
+          left: `calc(50% - 12.5vw - 15px)`,
+        };
+      case CHARACTER_ID.NKO:
+        if (!right) {
+          return {
+            bottom: '83%',
+            left: '55%',
+          };
+        }
+
+        return {
+          bottom: '83%',
+          left: '-80%',
+        };
+      case CHARACTER_ID.NEOS:
+        return {
+          bottom: '85%',
+          left: '-38%',
+        };
+      default:
+        return {
+          bottom: 0,
+          left: 0,
+        };
+    }
+  }};
+
+  @media (min-width: 1921px) {
+    ${({characterId, right}) => {
+      switch (characterId) {
+        case CHARACTER_ID.CHOUMCHOUM:
+          return {
+            bottom: '96%',
+            left: '-70%',
+          };
+        case CHARACTER_ID.BENJAM:
+          return {
+            bottom: '100%',
+            right: '7%',
+          }
+        case CHARACTER_ID.NARRATOR:
+          return {
+            bottom: '5vh',
+            left: `calc(50% - 12.5vw - 15px)`,
+          };
+        case CHARACTER_ID.NKO:
+          if (!right) {
+            return {
+              bottom: '83%',
+              left: '55%',
+            };
+          }
+
+          return {
+            bottom: '83%',
+            left: '-95%',
+          };
+        case CHARACTER_ID.NEOS:
+          return {
+            bottom: '85%',
+            left: '-40%',
+          };
+        default:
+          return {
+            bottom: 0,
+            left: 0,
+          };
+      }
+    }}
+  }
 `;

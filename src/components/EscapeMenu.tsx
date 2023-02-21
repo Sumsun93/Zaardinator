@@ -6,6 +6,8 @@ import QUEST_STATES from "../constants/questStates";
 import {AiOutlineSetting, FiVolume2, FiVolumeX, ImCross} from "react-icons/all";
 import zaardoz from "../assets/zz.png";
 import styled from "styled-components";
+import {LOCAL_STORAGE} from "../constants/localStorage";
+import debugSave from "../../debug-save.json";
 
 const EscapeMenu = () => {
     const dispatch = useDispatch();
@@ -85,6 +87,15 @@ const EscapeMenu = () => {
                             e.stopPropagation();
                         }}
                     >
+                        <button
+                            onClick={() => {
+                                localStorage.setItem(LOCAL_STORAGE.GAME_SAVE, JSON.stringify(debugSave));
+                                location.reload();
+                            }}
+                        >
+                            debug save
+                        </button>
+
                         <Button
                             type="primary"
                             style={{

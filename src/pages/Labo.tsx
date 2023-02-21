@@ -1,5 +1,4 @@
 import 'regenerator-runtime';
-import {Button, Row} from "antd";
 import styled, {css, keyframes} from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "./Layout";
@@ -8,7 +7,6 @@ import table1 from '../assets/labo/ZZ_QUIZ_TABLE_1.svg';
 import table2 from '../assets/labo/ZZ_QUIZ_TABLE_2.svg';
 import table3 from '../assets/labo/ZZ_QUIZ_TABLE_3.svg';
 import table4 from '../assets/labo/ZZ_QUIZ_TABLE_4.svg';
-import {useNavigate} from "react-router-dom";
 import {RootState} from "../redux/store";
 import QUEST_STATES from "../constants/questStates";
 import {
@@ -20,26 +18,32 @@ import {
 } from "../redux/features/game/gameSlice";
 import DropContainer from "../components/DropContainer";
 import ITEMS from "../constants/items";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo} from "react";
 import {SOUNDS} from "../components/SoundEffect";
 import useSpeechRecognition from "../hooks/useSpeechRecognition";
-import Neos from "../components/Characters/Neos/Neos";
-import ComicsBubble from "../components/ComicsBubble";
 import useGameBoard from "../hooks/useGameBoard";
-import {MAP, MAP_NAME} from "../constants/map";
+import {MAP_NAME} from "../constants/map";
+import NPC from "../components/NPCs/NPC";
+import {CHARACTER_ID} from "../constants/character";
+import {isActiveQuestIsBefore} from "../utils/quest";
+import usePlayer from "../hooks/usePlayer";
+import {QUEST_ID} from "../constants/quest";
 
 // const socket = socketIoClient('https://zaardinator.onrender.com');
 const Labo = () => {
     const {questState, itemInventory} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
     const {moveToMap} = useGameBoard();
+    const {player} = usePlayer();
     const {
         transcript,
         startListening,
         stopListening,
     } = useSpeechRecognition();
 
-    const [isBlackScreen, setIsBackScreen] = useState(true);
+    const isBlackScreen = useMemo(() => {
+        return isActiveQuestIsBefore(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, 2, 2);
+    }, [player.activeQuests]);
 
     const goDonjon = () => {
         moveToMap(MAP_NAME.CASTLE.DONJON);
@@ -72,12 +76,7 @@ const Labo = () => {
         }
     }, [transcript]);
 
-    const onDrop = ({
-        neededState,
-        neededItem,
-        nextQuestState,
-        nextItemInventory,
-    }: {
+    const onDrop = ({neededState, neededItem, nextQuestState, nextItemInventory}: {
         neededState: QUEST_STATES,
         neededItem: ITEMS,
         nextQuestState: QUEST_STATES,
@@ -131,35 +130,20 @@ const Labo = () => {
             ]}
             locationName={'Laboratoire du Mage'}
         >
-            {questState === QUEST_STATES.STATE_1 && isBlackScreen && (
-                <>
-                    <BlackScreen />
-                    <ComicsBubble
-                        style={{
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-100%, -100%)',
-                            width: '50%',
-                            zIndex: 100,
-                        }}
-                        isNarrator
-                        content={[
-                            'Tu pénètres alors l’antre du Grand Mage, la gorge serrée et le ventre noué. Tu as longuement réfléchi à comment tu allais te présenter. Il va de soi qu’il faudra également complimenter et approuver tout ce que ce terrible Mage allait dire et faire.'
-                        ]}
-                        onEnd={() => {
-                            setIsBackScreen(false);
-                        }}
-                    />
-                </>
-            )}
-            <DropContainer onDrop={onDrop(
-                {
-                    neededState: QUEST_STATES.STATE_3,
-                    neededItem: ITEMS.POTION_1,
-                    nextQuestState: QUEST_STATES.STATE_4,
-                    nextItemInventory: ITEMS.NONE,
-                }
-            )}>
+            <NPC characterId={CHARACTER_ID.NARRATOR} />
+
+            {isBlackScreen && <BlackScreen />}
+
+            <DropContainer
+                onDrop={onDrop(
+                    {
+                        neededState: QUEST_STATES.STATE_3,
+                        neededItem: ITEMS.POTION_1,
+                        nextQuestState: QUEST_STATES.STATE_4,
+                        nextItemInventory: ITEMS.NONE,
+                    }
+                )}
+            >
                 <Table
                     src={table}
                     alt={'Table'}
@@ -177,7 +161,7 @@ const Labo = () => {
                 />
             </DropContainer>
 
-            {questState === QUEST_STATES.STATE_1 && !isBlackScreen && (
+            {/*{questState === QUEST_STATES.STATE_1 && !isBlackScreen && (
                 <ComicsBubble
                     style={{
                         position: 'absolute',
@@ -199,8 +183,9 @@ const Labo = () => {
                         dispatch(setQuestState(QUEST_STATES.STATE_2));
                     }}
                 />
-            )}
-            {questState === QUEST_STATES.STATE_3 && (
+            )}*/}
+
+            {/*{questState === QUEST_STATES.STATE_3 && (
                 <ComicsBubble
                     style={{
                         position: 'absolute',
@@ -214,8 +199,9 @@ const Labo = () => {
                         'Vas-y verse tout dans l\'alambic et ça devrait fonctionner. Ou alors tu vas peut etre exploser, wouha ce sera drôle et dis ? Comment ça “non c’est pas drôle” ?',
                     ]}
                 />
-            )}
-            {questState === QUEST_STATES.STATE_4 && (
+            )}*/}
+
+            {/*{questState === QUEST_STATES.STATE_4 && (
                 <ComicsBubble
                     style={{
                         position: 'absolute',
@@ -228,9 +214,9 @@ const Labo = () => {
                         'Il reste une dernière chose à dire à voix haute, c’est une formule magique connue, mais popa y m’a pas dit c’est laquelle.',
                     ]}
                 />
-            )}
+            )}*/}
 
-            {questState === QUEST_STATES.STATE_6 && (
+            {/*{questState === QUEST_STATES.STATE_6 && (
                 <ComicsBubble
                     style={{
                         position: 'absolute',
@@ -243,9 +229,10 @@ const Labo = () => {
                         'Bravo ! Quand mon popa il va savoir que j’ai tout fais tout seul il va pas en rev.. ouais ouais bon ça va tu peux y aller, mec.',
                     ]}
                 />
-            )}
+            )}*/}
+
             <NeosContainer>
-                <Neos />
+                <NPC characterId={CHARACTER_ID.NEOS} />
             </NeosContainer>
 
             {/*<Button
@@ -267,97 +254,56 @@ export default Labo
 
 // filter drop shadow blinking
 const blinking = keyframes`
-    0% {
-        filter: drop-shadow(0 0 0.5rem #fff);
-    }
-    50% {
-        filter: drop-shadow(0 0 0 #fff);
-    }
-    100% {
-        filter: drop-shadow(0 0 0.5rem #fff);
-    }
+  0% {
+    filter: drop-shadow(0 0 0.5rem #fff);
+  }
+  50% {
+    filter: drop-shadow(0 0 0 #fff);
+  }
+  100% {
+    filter: drop-shadow(0 0 0.5rem #fff);
+  }
 `;
 
 const Table = styled.img`
-    position: absolute;
-    z-index: 5;
-    cursor: pointer;
-    ${({isBlinking}: { isBlinking: boolean }) => isBlinking && css`
-        animation: ${blinking} 1s linear infinite;
-    `};
+  position: absolute;
+  z-index: 5;
+  cursor: pointer;
   
-    @media (max-height: 2160px) {
-        bottom: 8vh;
-        right: 13vw;
-        height: 55vh;
-    }
+  ${({isBlinking}: { isBlinking: boolean }) => isBlinking && css`
+    animation: ${blinking} 1s linear infinite;
+  `};
 
-    @media (max-height: 1440px) {
-        bottom: 8vh;
-        right: 13vw;
-        height: 55vh;
-    }
+  bottom: 8%;
+  right: 13%;
+  width: 25vw;
 
-    @media (max-height: 1366px) {
-        bottom: 4vh;
-        right: 13vw;
-        height: 60vh;
-    }
-
-    @media (max-height: 1200px) {
-        bottom: 0;
-        right: 13vw;
-        height: 65vh;
-    }
-  
-    @media (max-height: 1080px) {
-        bottom: 8vh;
-        right: 13vw;
-        height: 602px;
-    }
-  
-    
+  @media (min-width: 1921px) {
+    bottom: 4%;
+    right: 13%;
+  }
 `;
 
 const NeosContainer = styled.div`
   position: absolute;
 
-  @media (max-height: 2160px) {
-    bottom: 3vh;
-    left: 16vw;
-    height: 40vh;
-  }
+  bottom: 4%;
+  left: 20%;
+  width: 30vw;
 
-  @media (max-height: 1440px) {
-    bottom: 5vh;
-    left: 20vw;
-    height: 35vh;
-  }
-
-  @media (max-height: 1366px) {
-    bottom: 0;
-    left: 20vw;
-    height: 35vh;
-  }
-
-  @media (max-height: 1200px) {
-    bottom: -1vh;
-    left: 20vw;
-    height: 38vh;
-  }
-
-  @media (max-height: 1080px) {
-    bottom: 5vh;
-    left: 19vw;
-    height: 35vh;
+  @media (min-width: 1921px) {
+    bottom: 3%;
+    left: 25%;
   }
 `;
 
 const BlackScreen = styled.div`
-    position: absolute;
-    z-index: 16;
-    width: 100vw;
-    height: 105vh;
-    background-color: black;
-    opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 16;
+  background-color: black;
+  opacity: 1;
 `;

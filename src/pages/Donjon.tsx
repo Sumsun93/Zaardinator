@@ -10,7 +10,7 @@ import {setSoundToPlay} from "../redux/features/game/gameSlice";
 import {SOUNDS} from "../components/SoundEffect";
 import useGameBoard from "../hooks/useGameBoard";
 import {MAP_NAME} from "../constants/map";
-import {isActiveQuestIsAfterStep, isQuestCompleted} from "../utils/quest";
+import {isActiveQuestIsAfter, isQuestCompleted} from "../utils/quest";
 import {QUEST_ID} from "../constants/quest";
 import usePlayer from "../hooks/usePlayer";
 import NPC from "../components/NPCs/NPC";
@@ -39,7 +39,7 @@ const Donjon = () => {
     }
 
     const isVisitingLabo = isQuestCompleted(player.questsFinished, QUEST_ID.SAVE_THE_PRINCESS) ||
-        isActiveQuestIsAfterStep(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, 0)
+        isActiveQuestIsAfter(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, 0)
 
     const items = useMemo(() => {
         const allItems = [
@@ -49,7 +49,10 @@ const Donjon = () => {
             }
         ];
 
-        if (isVisitingLabo) {
+        const canAccessLab = isQuestCompleted(player.questsFinished, QUEST_ID.SAVE_THE_PRINCESS) ||
+            isActiveQuestIsAfter(player.activeQuests, QUEST_ID.SAVE_THE_PRINCESS, 0, 1)
+
+        if (isVisitingLabo && canAccessLab) {
             allItems.push({
                 label: 'Laboratoire',
                 onClick: goLabo,

@@ -77,4 +77,19 @@ export const DEFAULT_NPC_PROPERTIES: {[key: string]: NPC} = {
         },
         quests: [],
     },
+    [CHARACTER_ID.NEOS]: {
+        id: CHARACTER_ID.NKO,
+        type: CHARACTER_TYPE.NPC,
+        name: 'NKO',
+        level: 1,
+        health: Number.POSITIVE_INFINITY,
+        armor: Number.POSITIVE_INFINITY,
+        experience: 0,
+        inventory: {
+            slots: 1,
+            items: [],
+            money: null,
+        },
+        quests: [],
+    },
 }

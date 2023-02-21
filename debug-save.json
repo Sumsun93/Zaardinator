@@ -1,0 +1,40 @@
+{
+  "player": {
+    "name": "Benjam",
+    "health": 42,
+    "armor": 0,
+    "level": 1,
+    "experience": 0,
+    "inventory": {
+      "slots": 1,
+      "items": [],
+      "money": null,
+      "fastAccess": {
+        "slot1": null,
+        "slot2": null,
+        "slot3": null,
+        "slot4": null,
+        "slot5": null
+      },
+      "equipments": {
+        "head": null,
+        "chest": null,
+        "legs": null,
+        "feet": null,
+        "leftWeapon": null,
+        "rightWeapon": null
+      }
+    },
+    "questsFinished": [],
+    "activeQuests": [
+      {
+        "questId": "save-the-princess",
+        "currentStepIndex": 1,
+        "currentDialogIndex": 0
+      }
+    ]
+  },
+  "gameboard": {
+    "currentMap": "castle-hall"
+  }
+}

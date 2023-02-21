@@ -398,53 +398,31 @@ const Pancarte = styled.img`
 `;
 
 const BarmanContainer = styled.div`
+  z-index: 10;
   position: absolute;
   bottom: 0;
-  right: 0;
-  height: 77vh;
-  z-index: 10;
-`;
+  right: 3%;
+  width: 25vw;
 
-const BubbleContainer = styled.div`
-  position: relative;
-  z-index: 100;
-
-  ${({doFade}: { doFade?: boolean }) => doFade && css`
-    opacity: 0;
-    animation: ${fadeIn} 1s ease-in-out 2.5s;
-    animation-fill-mode: forwards;
-  `}
-`;
-
-const Barman = styled.img`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 75vh;
-  z-index: 10;
-  transform: translateX(100%);
-  animation: ${slideFromRight} 1s ease-in-out 1.5s;
-  animation-fill-mode: forwards;
-  transition: .2s;
+  @media (min-width: 1921px) {
+    bottom: 0;
+    right: 3%;
+    width: 22vw;
+  }
 `;
 
 const AlcooliqueContainer = styled.div`
   position: absolute;
-  bottom: 0;
-  left: -11vw;
-  height: 50vh;
   z-index: 0;
-`;
+  bottom: 3%;
+  left: -9%;
+  width: 55vw;
 
-const Alcoolique = styled.img`
-  position: absolute;
-  bottom: 0;
-  left: -10vw;
-  height: 50vh;
-  z-index: 0;
-  transform: translateX(-100%);
-  animation: ${slideFromLeft} 1s ease-in-out 1s;
-  animation-fill-mode: forwards;
+  @media (min-width: 1921px) {
+    bottom: 1%;
+    left: -7%;
+    width: 50vw;
+  }
 `;
 
 const cageBalancing = keyframes`

@@ -83,20 +83,23 @@ export const QUESTS: Quest[] = [
                             {
                                 text: 'Continuer',
                                 nextDialogId: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.SPEAK_TO_THE_MAGICIAN,
+                                onClick: () => {
+                                    questNext(QUEST_ID.SAVE_THE_PRINCESS);
+                                },
                             }
                         ],
                     },
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_2.SPEAK_TO_THE_MAGICIAN,
-                        characterId: CHARACTER_ID.MAGICIAN,
+                        characterId: CHARACTER_ID.NEOS,
                         autoPlay: true,
                         text: [
-                            'Hey’ salut ! Wouha mais qu’est ce que tu fais ici d’abord ? Oh et puis c’est le crâne de tante Marge que t’as dans les mains t’es un voleur c’est ça ?! J’vais appeler mon popa, tu vas passer un sal quart d’heure mec !',
-                            '"La peur s’empare de toi et tout le courage que tu avais jusqu’à lors à disparu. Confus et paniqué tu te mets à déblaterer toute l’histoire au gamin, priant pour qu’il te croit"',
-                            'Ah ah ah comment j’t’ai bien eu, oh là là tu verrais ta tronche mec !',
-                            'J’reconnais c’est Nko qui t’a joué un mauvais tour, j’avais tout de suite compris rassures toi, tu peux poser le crâne avec mes jouets, j’avais cassé le dernier ça tombe bien ! Merci',
-                            'Je m’appelle Neos et mon popa l’est parti acheter des clopes qu’il m’a dit. Mais t’en fais pas j’vais t’aider moi ! J’sais faire hein, pour de vrai quoi. T’façon ça tombe bien avant de partir popa a fait une base d’élixir, mais il nous manque un truc.',
-                            'Tu vas devoir parcourir les contrées les plus lointaines, traverser les mères et affronter l’armée des Cépanous, pour enfin demander audience auprès du gou…Attends tu m’écoutes là ?',
+                            // 'Hey’ salut ! Wouha mais qu’est ce que tu fais ici d’abord ? Oh et puis c’est le crâne de tante Marge que t’as dans les mains t’es un voleur c’est ça ?! J’vais appeler mon popa, tu vas passer un sal quart d’heure mec !',
+                            // '"La peur s’empare de toi et tout le courage que tu avais jusqu’à lors à disparu. Confus et paniqué tu te mets à déblaterer toute l’histoire au gamin, priant pour qu’il te croit"',
+                            // 'Ah ah ah comment j’t’ai bien eu, oh là là tu verrais ta tronche mec !',
+                            // 'J’reconnais c’est Nko qui t’a joué un mauvais tour, j’avais tout de suite compris rassures toi, tu peux poser le crâne avec mes jouets, j’avais cassé le dernier ça tombe bien ! Merci',
+                            // 'Je m’appelle Neos et mon popa l’est parti acheter des clopes qu’il m’a dit. Mais t’en fais pas j’vais t’aider moi ! J’sais faire hein, pour de vrai quoi. T’façon ça tombe bien avant de partir popa a fait une base d’élixir, mais il nous manque un truc.',
+                            // 'Tu vas devoir parcourir les contrées les plus lointaines, traverser les mères et affronter l’armée des Cépanous, pour enfin demander audience auprès du gou…Attends tu m’écoutes là ?',
                             'Bon ça va j’aurai essayé hein… En fait je sais pas du tout où ça se trouve mais tu vas devoir trouver du “sang de dragon albinos”. T’as plus qu’a chercher par toi même ! Moi j’suis trop petit pour partir avec des inconnus. Reviens me voir quand tu l’auras !',
                         ],
                         options: [
@@ -113,7 +116,7 @@ export const QUESTS: Quest[] = [
                 dialogs: [
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_3.PUT_POTION_IN_ALAMBIC,
-                        characterId: CHARACTER_ID.MAGICIAN,
+                        characterId: CHARACTER_ID.NEOS,
                         autoPlay: true,
                         text: [
                             'Salut mec ! Alors t’as trouvé ? Wouha trop cool ! Par contre ça pue de ouf cet élixir, oh quoi que non en fait. T’as laché une caisse ou quoi ?!',
@@ -128,7 +131,7 @@ export const QUESTS: Quest[] = [
                     },
                     {
                         id: DIALOG_ID.SAVE_THE_PRINCESS.STEP_3.WAIT_FOR_THE_ELIXIR,
-                        characterId: CHARACTER_ID.MAGICIAN,
+                        characterId: CHARACTER_ID.NEOS,
                         autoPlay: true,
                         text: [
                             'Bravo ! Quand mon popa il va savoir que j’ai tout fais tout seul il va pas en rev.. ouais ouais bon ça va tu peux y aller, mec.',

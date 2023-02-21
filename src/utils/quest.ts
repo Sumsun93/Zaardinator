@@ -29,6 +29,42 @@ export const isActiveQuestIsAfterStep = (playerActiveQuest: ActiveQuest[], quest
     ));
 }
 
+export const isActiveQuestIsAfter = (playerActiveQuest: ActiveQuest[], questId: QUEST_ID, stepIndex: number, dialogIndex?: number) => {
+    if (stepIndex < 0 || (dialogIndex && dialogIndex < 0)) {
+        return false;
+    }
+
+    if (typeof dialogIndex !== 'number') {
+        return playerActiveQuest.some((activeQuest) => (
+            activeQuest.questId === questId && activeQuest.currentStepIndex > stepIndex
+        ));
+    }
+
+    return playerActiveQuest.some((activeQuest) => (
+        activeQuest.questId === questId
+        && activeQuest.currentStepIndex > stepIndex
+        && activeQuest.currentDialogIndex > dialogIndex
+    ));
+}
+
+export const isActiveQuestIsBefore = (playerActiveQuest: ActiveQuest[], questId: QUEST_ID, stepIndex: number, dialogIndex?: number) => {
+    if (stepIndex < 0 || (dialogIndex && dialogIndex < 0)) {
+        return false;
+    }
+
+    if (typeof dialogIndex !== 'number') {
+        return playerActiveQuest.some((activeQuest) => (
+            activeQuest.questId === questId && activeQuest.currentStepIndex < stepIndex
+        ));
+    }
+
+    return playerActiveQuest.some((activeQuest) => (
+        activeQuest.questId === questId
+            && activeQuest.currentStepIndex < stepIndex
+            && activeQuest.currentDialogIndex < dialogIndex
+    ));
+}
+
 export const isQuestCompleted = (playerCompletedQuest: QUEST_ID[], questId: QUEST_ID) => {
     return playerCompletedQuest.includes(questId);
 }
