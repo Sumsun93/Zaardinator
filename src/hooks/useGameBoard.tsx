@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-import {updateMap} from "../redux/features/gameboard/gameboardSlice";
+import {updateMap, startGame as startGameRedux} from "../redux/features/gameboard/gameboardSlice";
 
 const useGameBoard = () => {
     const dispatch = useDispatch();
@@ -11,9 +11,14 @@ const useGameBoard = () => {
         dispatch(updateMap(mapName));
     }, [dispatch]);
 
+    const startGame = useCallback(() => {
+        dispatch(startGameRedux());
+    }, [dispatch]);
+
     return {
         gameboard,
         moveToMap,
+        startGame,
     };
 };
 

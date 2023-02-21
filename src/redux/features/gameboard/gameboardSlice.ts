@@ -7,6 +7,7 @@ const gameSave = getSavedGame();
 
 const initialState: GameBoard = {
     currentMap: gameSave?.gameboard.currentMap || MAP_NAME.FOREST.TAVERNE,
+    hasStartGame: gameSave?.gameboard.hasStartGame || false,
 }
 
 export const gameboardSlice = createSlice({
@@ -16,9 +17,12 @@ export const gameboardSlice = createSlice({
         updateMap: (state, action: PayloadAction<string>) => {
             state.currentMap = action.payload;
         },
+        startGame: (state) => {
+            state.hasStartGame = true;
+        },
     },
 });
 
-export const {updateMap} = gameboardSlice.actions;
+export const {updateMap, startGame} = gameboardSlice.actions;
 
 export default gameboardSlice.reducer;

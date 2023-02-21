@@ -1,5 +1,6 @@
 export interface GameBoard {
     currentMap: string;
+    hasStartGame: boolean;
 }
 
 /**

@@ -13,8 +13,10 @@ import {RootState} from "../redux/store";
 import {SOUNDS} from "../components/SoundEffect";
 import useGameBoard from "../hooks/useGameBoard";
 import {MAP, MAP_NAME} from "../constants/map";
+import {getSavedGame} from "../utils/save";
 
 const Home = () => {
+    const {gameboard, startGame} = useGameBoard();
     const {isInit} = useSelector((state: RootState) => state.game);
     const dispatch = useDispatch();
     const {moveToMap} = useGameBoard();
@@ -42,7 +44,7 @@ const Home = () => {
         .catch((err) => {
             console.log(`${err.name} : ${err.message}`)
         });*/
-
+        startGame();
         dispatch(setInit(true))
         dispatch(setSoundToPlay({sound: SOUNDS.FOREST}));
     }

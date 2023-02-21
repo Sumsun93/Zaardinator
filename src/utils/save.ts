@@ -17,6 +17,7 @@ export const saveGame = (player: Player, gameboard: GameBoard) => {
         },
         gameboard: {
             currentMap: gameboard.currentMap,
+            hasStartGame: gameboard.hasStartGame,
         },
     };
 
